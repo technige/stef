@@ -28,3 +28,8 @@ missions_successful: 6
 ## Contents
 
 - [STEF Specification](STEF.md)
+
+---
+
+All code is published under the [MIT License](https://opensource.org/license/mit) ·
+All other works are published under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
