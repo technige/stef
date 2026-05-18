@@ -1,0 +1,78 @@
+(STEF type showcase — one paragraph per form, comments attached to values)
+
+(--- Scalars as block-dict entries ---)
+
+null_value: null
+bool_true: true
+bool_false: false
+integer: 42
+negative_integer: -273
+hex_integer: 0xDEAD
+float_value: 3.14159
+scientific: 6.022e23 (Avogadro's number)
+tiny: 1.602e-19 (elementary charge, coulombs)
+positive_infinity: infinity
+negative_infinity: -infinity
+not_a_number: NaN
+pi: 3.14159 (approx)
+date: 2026-05-18
+time_hhmm: 14:30
+time_full: 14:30:00.000
+timestamp_utc: 2026-05-18T14:30:00Z
+timestamp_offset: 2026-05-18T14:30:00+05:30
+unquoted: hello
+quoted: "Hello, World!"
+escaped: "line one\nline two\ttabbed"
+unicode_rocket: "\u{1F680}"
+block_text: """
+The quick brown fox
+jumps over the lazy dog.
+"""
+bytes_compact: 'DEADBEEF'
+bytes_spaced: 'DE AD BE EF'
+bytes_prefixed: '0xDE 0xAD 0xBE 0xEF'
+bytes_c_style: '\xDE\xAD\xBE\xEF'
+bytes_css_color: '#BADA55'
+block_bytes: '''
+DE AD BE EF  CA FE BA BE
+00 01 02 03  04 05 06 07
+FF FE FD FC  FB FA F9 F8
+'''
+
+(--- Collection forms ---)
+
+(Standard bracketed list — valid at any nesting depth)
+[1, 2, 3, 4, 5]
+
+(Standard bracketed dict — valid at any nesting depth)
+{name: Alice, age: 30, active: true}
+
+(Block list at depth zero — scalar items)
+- red
+- green
+- blue
+
+(Block list — inline-list items, two or more values each)
+- 1.0, 0.0, 0.0
+- 0.0, 1.0, 0.0
+- 0.0, 0.0, 1.0
+
+(Block list — inline-dict items, two or more pairs each)
+- id: 1001, name: Widget, price: 9.99
+- id: 1002, name: Gadget, price: 24.99
+- id: 1003, name: Doohickey, price: 4.49
+
+(Block list — items containing nested standard collections)
+- {name: Alice, scores: [95, 87, 92]}
+- {name: Bob, scores: [78, 81, 90]}
+- {name: Carol, scores: [88, 94, 96]}
+
+(Block dict at depth zero)
+host: localhost
+port: 8080
+debug: false
+
+(Block dict with nested bracketed collections)
+server: {host: localhost, port: 8080, tls: true}
+features: [logging, metrics, tracing]
+limits: {max_requests: 1000, timeout: 30.0}

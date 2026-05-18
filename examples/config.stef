@@ -1,0 +1,37 @@
+(Orion application configuration)
+(Environment: production)
+(Generated: 2026-05-18T06:00:00Z)
+
+name: orion
+version: "3.2.1"
+environment: production
+
+(HTTP server)
+host: "0.0.0.0"
+port: 8443
+debug: false
+workers: 16
+max_request_size: 0x100000 (1 MiB)
+request_timeout: 30.0
+shutdown_timeout: 5.0
+
+(Primary database)
+database: {host: "db-primary.internal", port: 5432, name: orion_prod, pool_min: 5, pool_max: 20, ssl: true}
+
+(Read replica)
+replica: {host: "db-replica.internal", port: 5432, name: orion_prod, pool_min: 2, pool_max: 10, ssl: true}
+
+(Redis cache)
+cache: {driver: redis, host: "cache.internal", port: 6379, db: 0, ttl: 300, max_connections: 50}
+
+(TLS termination)
+tls: {cert: "/etc/ssl/certs/orion.pem", key: "/etc/ssl/private/orion.key", min_version: "TLS1.3"}
+
+(Allowed CORS origins)
+cors_origins: ["https://orion.example.com", "https://admin.example.com", "https://api.example.com"]
+
+(Feature flags)
+features: {dark_mode: true, beta_api: false, experimental_search: false}
+
+log_level: info
+log_format: json

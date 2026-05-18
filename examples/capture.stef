@@ -1,0 +1,45 @@
+(Network packet capture)
+(Interface: eth0, filter: tcp port 443)
+(Capture started: 2026-05-18T08:30:00Z)
+
+timestamp: 2026-05-18T08:30:15.123456Z
+src: "192.168.1.100:54321"
+dst: "93.184.216.34:443"
+direction: outbound
+length: 517
+flags: {syn: true, ack: false, fin: false, rst: false}
+payload: '16 03 03 01 FF 01 00 01 FB 03 03' (TLS 1.3 ClientHello)
+
+timestamp: 2026-05-18T08:30:15.142891Z
+src: "93.184.216.34:443"
+dst: "192.168.1.100:54321"
+direction: inbound
+length: 1420
+flags: {syn: true, ack: true, fin: false, rst: false}
+payload: '16 03 03 05 8B 02 00 00 76 03 03' (TLS 1.3 ServerHello)
+
+timestamp: 2026-05-18T08:30:15.201034Z
+src: "192.168.1.100:54321"
+dst: "93.184.216.34:443"
+direction: outbound
+length: 64
+flags: {syn: false, ack: true, fin: false, rst: false}
+payload: '14 03 03 00 01 01' (ChangeCipherSpec)
+
+timestamp: 2026-05-18T08:30:15.489120Z
+src: "192.168.1.100:54321"
+dst: "93.184.216.34:443"
+direction: outbound
+length: 0
+flags: {syn: false, ack: false, fin: true, rst: false}
+payload: '' (connection teardown — zero-length payload)
+
+(Capture summary)
+total_packets: 4
+total_bytes: 2001
+start_time: 2026-05-18T08:30:15.123456Z
+end_time: 2026-05-18T08:30:15.489120Z
+duration_ms: 365.664
+src_mac: '0x A4:83:E7:12:34:56'
+dst_mac: '0x 00:1A:2B:3C:4D:5E'
+capture_file_sha256: 'e3b0c442 98fc1c14 9afbf4c8 996fb924 27ae41e4 649b934c a495991b 7852b855'

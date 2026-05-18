@@ -1,0 +1,90 @@
+(Byte strings in STEF support a rich variety of decorative notations.
+All non-hex characters between hex pairs are ignored by parsers, making
+it natural to express binary data in whatever form fits the domain.)
+
+
+(--- The same four bytes, written eight different ways ---)
+
+(Compact: no separators)
+'DEADBEEF'
+
+(Space-separated: hex dump style)
+'DE AD BE EF'
+
+(0x-prefixed: Python and C literal style)
+'0xDE 0xAD 0xBE 0xEF'
+
+(\x-prefixed: C string escape style)
+'\xDE\xAD\xBE\xEF'
+
+(Colon-separated: MAC address and TLS fingerprint style)
+'DE:AD:BE:EF'
+
+(Dot-separated: certificate serial number style)
+'DE.AD.BE.EF'
+
+(Hash-prefixed: CSS web colour style)
+'#DEADBEEF'
+
+(Bracketed: structured grouping style)
+'[DE][AD][BE][EF]'
+
+
+(--- Real-world examples ---)
+
+(SHA-256 digest of the empty string, compact)
+'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
+
+(Same digest, split into 8-byte groups for readability)
+'e3b0c442 98fc1c14 9afbf4c8 996fb924 27ae41e4 649b934c a495991b 7852b855'
+
+(128-bit AES-128 key in \x notation)
+'\x00\x11\x22\x33\x44\x55\x66\x77\x88\x99\xAA\xBB\xCC\xDD\xEE\xFF'
+
+(Ethernet MAC address, colon-separated)
+'2C:54:91:88:C9:E3'
+
+(IPv4 address 192.168.1.1 as four raw bytes, dot-separated)
+'C0.A8.01.01'
+
+(IPv6 address as sixteen raw bytes, grouped like standard IPv6 notation)
+'2001:0DB8:0000:0000:0000:0000:0000:0001'
+
+(RGBA colour using CSS hash-prefix notation)
+'#FF5733FF'
+
+(UUID as raw bytes, grouped by UUID field widths)
+'550E8400-E29B-41D4-A716-446655440000'
+
+(x86 instruction: PUSH RBP / MOV RBP,RSP / XORL EAX,EAX)
+'55 48 89 E5 31 C0'
+
+(PNG magic bytes in block form)
+'''
+89 50 4E 47 0D 0A 1A 0A
+'''
+
+(Public key DER header and first few bytes of modulus, multi-line block)
+'''
+30 82 01 22 30 0D 06 09  2A 86 48 86 F7 0D 01 01
+01 05 00 03 82 01 0F 00  30 82 01 0A 02 82 01 01
+00 B3 51 0A 09 F2 35 C9  A5 C2 28 C5 FF 50 A4 2B
+'''
+
+
+(--- In context: a TLS certificate record ---)
+
+subject: "CN=example.com, O=Example Ltd, C=GB"
+not_before: 2025-01-01T00:00:00Z
+not_after:  2026-01-01T00:00:00Z
+serial: '01:23:45:67:89:AB:CD:EF'
+sha1_fingerprint:   'A1:B2:C3:D4:E5:F6:A7:B8:C9:D0:E1:F2:A3:B4:C5:D6:E7:F8:A9:B0'
+sha256_fingerprint: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
+issuer_key_id: '0x40 0x37 0x2F 0x48 0x1B 0x85 0x26 0x37 0x02 0x9F'
+subject_key_id: '\xAA\xBB\xCC\xDD\xEE\xFF\x00\x11\x22\x33\x44\x55\x66\x77\x88\x99\xAA\xBB\xCC\xDD'
+public_key: '''
+30 82 01 22 30 0D 06 09  2A 86 48 86 F7 0D 01 01
+01 05 00 03 82 01 0F 00  30 82 01 0A 02 82 01 01
+00 B3 51 0A 09 F2 35 C9  A5 C2 28 C5 FF 50 A4 2B
+D9 D8 9B 98 BF 27 15 E1  01 7D C4 EF 71 21 20 B3
+'''

@@ -1,0 +1,23 @@
+(Engineering team directory — exported 2026-05-18)
+
+- name: "Alice Nguyen", title: "Principal Engineer", joined: 2018-01-10, active: true
+- name: "Bob Chen", title: "Staff Engineer", joined: 2019-07-22, active: true
+- name: "Carol Davis", title: "Senior Engineer", joined: 2021-03-15, active: true
+- name: "Dave Kim", title: Engineer, joined: 2023-11-01, active: true
+- name: "Eve Martinez", title: "Senior Engineer", joined: 2020-06-30, active: false
+
+(Open source project release history)
+
+- version: "3.2.1", released: 2026-05-18, stable: true, downloads: 84219
+- version: "3.2.0", released: 2026-04-02, stable: true, downloads: 201847
+- version: "3.1.0", released: 2025-12-14, stable: true, downloads: 519302
+- version: "3.0.0", released: 2025-09-01, stable: true, downloads: 1042681
+- version: "3.0.0-rc1", released: 2025-08-11, stable: false, downloads: 6741
+
+(Sprint task board — week of 2026-05-18)
+
+- id: T-401, summary: "Migrate auth to OIDC", status: in_progress, owner: "Alice Nguyen", points: 8
+- id: T-402, summary: "Add rate-limit headers", status: done, owner: "Bob Chen", points: 3
+- id: T-403, summary: "Cache layer benchmarks", status: in_progress, owner: "Carol Davis", points: 5
+- id: T-404, summary: "Upgrade ORM to v4", status: todo, owner: null, points: 13
+- id: T-405, summary: "Write migration guide", status: todo, owner: null, points: 5
