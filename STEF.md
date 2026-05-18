@@ -14,12 +14,12 @@ must use UTF-8 without byte order marks. Literal strings are shown in their
 canonical casing, but the format is case-insensitive, so any casing can apply.
 
 ```
-HT             := U+0009
-LF             := U+000A
-CR             := U+000D
-SP             := U+0020
-ASCII          := U+0020..U+007E
-IDENTIFIER     := <defined by https://www.unicode.org/reports/tr31/>
+HT              := U+0009
+LF              := U+000A
+CR              := U+000D
+SP              := U+0020
+ASCII           := U+0020..U+007E
+IDENTIFIER      := <defined by https://www.unicode.org/reports/tr31/>
 ```
 
 
@@ -31,17 +31,17 @@ implementation. Parsers may choose to either ignore comments, or to associate
 them with adjacent values, e.g. `pi: 3.14 (approx)`.
 
 ```
-space          := SP | HT
-line-break     := CR LF | CR | LF
-inline-char    := ASCII | U+0080..U+10FFFF
-char           := inline-char | CR | LF | HT
-comment-char   := char EXCEPT "(" EXCEPT ")"
-comment-text   := comment-char*
-comment        := "(" comment-text (comment comment-text)* ")"
-inline-space   := space | comment
-white-space    := inline-space | line-break
-~~             := white-space*   # optional whitespace/comments, including newlines
---             := inline-space*  # optional whitespace/comments, excluding newlines
+space           := SP | HT
+line-break      := CR LF | CR | LF
+inline-char     := ASCII | U+0080..U+10FFFF
+char            := inline-char | CR | LF | HT
+comment-char    := char EXCEPT "(" EXCEPT ")"
+comment-text    := comment-char*
+comment         := "(" comment-text (comment comment-text)* ")"
+inline-space    := space | comment
+white-space     := inline-space | line-break
+~~              := white-space*   # optional whitespace/comments, including newlines
+--              := inline-space*  # optional whitespace/comments, excluding newlines
 ```
 
 
@@ -52,11 +52,11 @@ a common type or structure. Comments may be inserted between paragraphs. A
 standalone comment between paragraphs does not constitute a new paragraph.
 
 ```
-stream         := paragraph-seq?
-paragraph-seq  := paragraph (blank-line paragraph)*
-paragraph      := (value | block-list | block-dict) -- line-break
-blank-line     := ~~ line-break
-value          := null | boolean | numeric | temporal | string | collection
+stream          := paragraph-seq?
+paragraph-seq   := paragraph (blank-line paragraph)*
+paragraph       := (value | block-list | block-dict) -- line-break
+blank-line      := ~~ line-break
+value           := null | boolean | numeric | temporal | string | collection
 ```
 
 
@@ -65,7 +65,7 @@ values without quoting. Parsers should identify these as single tokens. All
 case variants are reserved.
 
 ```
-reserved       := null | true | false | infinity | NaN
+reserved        := null | true | false | infinity | NaN
 ```
 
 
@@ -76,7 +76,7 @@ include or exclude `null` as desired. Parsers must gracefully accept `null` in
 any valid position; implementations may choose to keep or discard these.
 
 ```
-null           := "null"/i
+null            := "null"/i
 ```
 
 
@@ -85,9 +85,9 @@ the only forms, but are case-insensitive. The canonical representations are
 lower case.
 
 ```
-boolean        := true | false
-true           := "true"/i
-false          := "false"/i
+boolean         := true | false
+true            := "true"/i
+false           := "false"/i
 ```
 
 
@@ -103,20 +103,23 @@ or `1.0e0`. However, implementations may choose to output any valid form.
 Parsers should gracefully accept any valid form.
 
 ```
-numeric        := number | nan
-number         := sign? (integer | hex-integer | float | infinity)
-sign           := "+" | "-"
-digit          := "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
-hex-upper      := "A" | "B" | "C" | "D" | "E" | "F"
-hex-lower      := "a" | "b" | "c" | "d" | "e" | "f"
-hex-digit      := digit | hex-upper | hex-lower
-integer        := digit+
-hex-integer    := "0x" hex-digit+
-float          := integer fraction exponent?
-fraction       := "." digit+
-exponent       := "e"/i sign? digit+
-nan            := "NaN"/i
-infinity       := "infinity"/i
+numeric         := number | not-a-number
+number          := sign? (integer | hex-integer | float | infinity)
+
+sign            := "+" | "-"
+digit           := "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+hex-upper       := "A" | "B" | "C" | "D" | "E" | "F"
+hex-lower       := "a" | "b" | "c" | "d" | "e" | "f"
+hex-digit       := digit | hex-upper | hex-lower
+
+integer         := digit+
+hex-integer     := "0x" hex-digit+
+float           := integer fraction exponent?
+fraction        := "." digit+
+exponent        := "e"/i sign? digit+
+
+not-a-number    := "NaN"/i
+infinity        := "infinity"/i
 ```
 
 
@@ -125,13 +128,13 @@ used to represent values according to the Gregorian calendar and the 24-hour
 clock.
 
 ```
-temporal       := date | time | timestamp
-hh-mm          := digit*2 ":" digit*2
-hh-mm-ss       := hh-mm ":" digit*2 ("." digit+)?
-time-zone      := "Z"/i | sign hh-mm
-date           := digit*4 "-" digit*2 "-" digit*2 time-zone?
-time           := hh-mm | hh-mm-ss
-timestamp      := date "T"/i time time-zone?
+temporal        := date | time | timestamp
+hh-mm           := digit*2 ":" digit*2
+hh-mm-ss        := hh-mm ":" digit*2 ("." digit+)?
+time-zone       := "Z"/i | sign hh-mm
+date            := digit*4 "-" digit*2 "-" digit*2 time-zone?
+time            := hh-mm | hh-mm-ss
+timestamp       := date "T"/i time time-zone?
 ```
 
 
@@ -158,20 +161,30 @@ character, but in the sequence `0x` the digit is merely decorative. Parsing
 hexadecimal characters in distinct pairs is strongly advised.
 
 ```
-string         := IDENTIFIER | text | bytes | block-text | block-bytes
-text-char      := inline-char EXCEPT "\" EXCEPT '"'
-text-content   := text-char*
-escape         := '\"' | "\\" | "\/" | "\b" | "\f" | "\n" | "\r" | "\t" | u-escape
-u-escape       := u4-escape | u6-escape
-u4-escape      := "\u" hex-digit*4
-u6-escape      := "\u" "{" hex-digit+ "}"
-text           := '"' text-content (escape text-content)* '"'
-hex-pair       := hex-digit*2
-hex-symbol     := "#" | "$" | "%" | "&" | "-" | "." | ":" | "[" | "]" | "0x" | "U+" | "\x" | "x"
-hex-decoration := (inline-space | hex-symbol)*
-bytes          := "'" hex-decoration (hex-pair hex-decoration)* "'"
-block-text     := '"""' ... '"""'
-block-bytes    := "'''" ... "'''"
+string          := IDENTIFIER | text | bytes | block-text | block-bytes
+
+escape          := '\"' | "\\" | "\/" | "\b" | "\f" | "\n" | "\r" | "\t" | u-escape
+u-escape        := u4-escape | u6-escape
+u4-escape       := "\u" hex-digit*4
+u6-escape       := "\u" "{" hex-digit+ "}"
+
+text-char       := inline-char EXCEPT "\" EXCEPT '"'
+text-atom       := text-char | escape
+text            := '"' text-atom* '"'
+
+block-text-atom := text-atom | line-break
+block-text-quot := '"' | '""'
+block-text-seq  := block-text-atom* (block-text-quot block-text-atom)?
+block-text      := '"""' block-text-seq* '"""'
+
+hex-pair        := hex-digit*2
+hex-symbol      := "#" | "$" | "%" | "&" | "-" | "." | ":" | "[" | "]" | "0x" | "U+" | "\x" | "x"
+hex-deco        := (hex-symbol | inline-space)*
+bytes           := "'" hex-deco (hex-pair hex-deco)* "'"
+
+block-hex-deco  := (hex-symbol | white-space)*
+block-bytes-seq := block-hex-deco (hex-pair block-hex-deco)*
+block-bytes     := "'''" block-bytes-seq "'''"
 ```
 
 
@@ -193,21 +206,26 @@ valid alternatives as fallbacks however, and parsers should gracefully accept
 content in any form.
 
 ```
-collection     := list | dict
-comma          := ","
-colon          := ":"
-list           := "[" value-seq? ~~ "]"
-value-seq      := value ~~ (comma ~~ value ~~)* comma?
-dict           := "{" key-value-seq? ~~ "}"
-key-value-seq  := key-value ~~ (comma ~~ key-value ~~)* comma?
-key-value      := key ~~ colon ~~ value
-key            := IDENTIFIER | text
-block-list     := list-item -- (line-break -- list-item --)*
-list-item      := "-" space+ (value | inline-list | inline-dict)
-block-dict     := dict-item -- (line-break -- dict-item --)*
-dict-item      := key -- colon -- value
-inline-list    := value -- comma -- value -- (comma -- value --)*
-inline-dict    := key-value -- comma -- key-value -- (comma -- key-value --)*
+collection      := list | dict
+
+comma           := ","
+
+list-seq        := value ~~ (comma ~~ value ~~)* comma?
+list            := "[" list-seq? ~~ "]"
+
+key             := IDENTIFIER | text
+key-value       := key ~~ ":" ~~ value
+dict-seq        := key-value ~~ (comma ~~ key-value ~~)* comma?
+dict            := "{" dict-seq? ~~ "}"
+
+inline-list     := value -- comma -- value -- (comma -- value --)*
+inline-dict     := key-value -- comma -- key-value -- (comma -- key-value --)*
+
+inline-value    := value | inline-list | inline-dict
+list-item       := "-" space+ inline-value
+dict-item       := key -- ":" -- inline-value
+block-list      := list-item -- (line-break -- list-item --)*
+block-dict      := dict-item -- (line-break -- dict-item --)*
 ```
 
 ---
