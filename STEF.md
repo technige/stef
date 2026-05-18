@@ -1,17 +1,16 @@
 # STEF Specification
 
-This document provides a specification for *STEF*, the Simple Token-Efficient
-Format. This is a data interchange format with a comprehensive but familiar
-data model and presentational forms that minimise punctuational noise and
-optimise semantic richness. Output is deliberately token-efficient when
-consumed by a large language model.
+This document provides a specification for *STEF*, the **Simple Token-Efficient
+Format**. This is a text-based, human-readable format for data interchange.
 
 
 ## Grammar
 
-The format is text-based, and draws from the Unicode character set. Encoding
-must use UTF-8 without byte order marks. Literal strings are shown in their
-canonical casing, but the format is case-insensitive, so any casing can apply.
+The format draws from the Unicode character set. Encoding must use UTF-8
+without byte order marks.
+
+Literal strings are shown here in their canonical casing, but the format is
+case-insensitive, so any casing may apply.
 
 ```
 HT              := U+0009
@@ -24,11 +23,13 @@ IDENTIFIER      := <defined by https://www.unicode.org/reports/tr31/>
 
 
 In the general case, white space and comments encode presentational detail
-only. Comments are enclosed in parentheses. Parentheses may be nested; the
-comment closes only when the outermost parenthesis is matched. Emitters may
-insert comments before, after or between any tokens, as desired by the
-implementation. Parsers may choose to either ignore comments, or to associate
-them with adjacent values, e.g. `pi: 3.14 (approx)`.
+only. Comments are enclosed in parentheses and may be nested; a comment closes
+only when the outermost parenthesis is matched. Comments may contain any
+characters and may span multiple lines.
+
+Emitters may insert comments before, after or between any tokens, as desired by
+the implementation. Parsers may choose to either ignore comments, or to
+associate them with adjacent values, e.g. `pi: 3.14 (approx)`.
 
 ```
 space           := SP | HT
@@ -129,12 +130,13 @@ clock.
 
 ```
 temporal        := date | time | timestamp
+date            := digit*4 "-" digit*2 "-" digit*2
 hh-mm           := digit*2 ":" digit*2
 hh-mm-ss        := hh-mm ":" digit*2 ("." digit+)?
-time-zone       := "Z"/i | sign hh-mm
-date            := digit*4 "-" digit*2 "-" digit*2 time-zone?
 time            := hh-mm | hh-mm-ss
-timestamp       := date "T"/i time time-zone?
+time-zone       := "Z"/i | sign hh-mm
+time_with_zone  := time time-zone?
+timestamp       := date "T"/i time
 ```
 
 

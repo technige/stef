@@ -1,6 +1,9 @@
-(STEF Examples — Simple Token-Efficient Format)
-(This stream contains multiple paragraphs, each separated by a blank line.)
-(Each paragraph demonstrates a different aspect of the format.)
+(
+STEF Examples
+
+This stream contains multiple paragraphs, each separated by a blank line.
+Each paragraph demonstrates a different aspect of the format.
+)
 
 
 (1. Scalar primitives in a block dict)
