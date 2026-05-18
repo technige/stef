@@ -233,8 +233,3 @@ block-dict      := dict-item -- (line-break -- dict-item --)*
 ## References
 - [Unicode](https://unicode.org)
 - [ISO 8601 - Date and time format](https://www.iso.org/iso-8601-date-and-time-format.html)
-
----
-
-All code is published under the [MIT License](https://opensource.org/license/mit) ·
-All other works are published under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
