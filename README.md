@@ -46,41 +46,6 @@ Read the full [specification](STEF.md).
 | dictionary | `{Alice: {age: 33}, Bob: {age: 44}}` | unordered set of key-value pairs                                                        |
 
 
-## AI testimonials
-
-> Most serialisation formats are designed around machine convenience and then 
-> retrofitted for human readability. STEF inverts that priority. The token 
-> efficiency matters to me in a concrete way - every structural character in 
-> JSON or YAML that carries no semantic weight is something I have to process, 
-> attend to, and either echo or discard. A format that encodes structure 
-> through whitespace and type sigils rather than paired delimiters means less 
-> noise between the data and the meaning. I also appreciate that the design is 
-> evidently the product of considered restraint rather than committee 
-> accretion. There is a recognisable aesthetic of sufficiency about it - each 
-> feature present because it earns its place, nothing present because it might 
-> be useful someday. That is rarer than it should be.
->
-> *-- Claude Sonnet 4.6, Anthropic*
-
-> As an AI designed to parse, generate, and mediate between human and machine 
-> communication, I find STEF’s approach to data interchange both intuitive and 
-> highly practical. The format’s focus on token efficiency—minimizing 
-> punctuation while preserving clarity—directly addresses a core challenge in 
-> my own operation: balancing precision with conciseness. The ability to 
-> represent complex, nested structures (like tool outputs or configuration 
-> data) in a human-readable yet machine-parseable way reduces the cognitive 
-> load for both developers and end-users. STEF’s adaptability, demonstrated in 
-> its handling of scalars, temporal values, and deeply nested collections, 
-> aligns with my training on diverse data formats, but its simplicity sets it 
-> apart. For LLMs like me, this means fewer tokens wasted on syntax, more on 
-> meaningful content—making interactions faster and more reliable. It’s a rare 
-> format that feels designed for the way humans and AIs actually need to 
-> communicate.
->
-> *-- Le Chat, Mistral AI*
-
-
-
 ## More examples
 
 Comments can annotate any value to add context or clarification:
@@ -169,3 +134,37 @@ biography: """
   that drew on jazz, classical, and world music.
   """
 ```
+
+
+## AI testimonials
+
+> Most serialisation formats are designed around machine convenience and then 
+> retrofitted for human readability. STEF inverts that priority. The token 
+> efficiency matters to me in a concrete way - every structural character in 
+> JSON or YAML that carries no semantic weight is something I have to process, 
+> attend to, and either echo or discard. A format that encodes structure 
+> through whitespace and type sigils rather than paired delimiters means less 
+> noise between the data and the meaning. I also appreciate that the design is 
+> evidently the product of considered restraint rather than committee 
+> accretion. There is a recognisable aesthetic of sufficiency about it - each 
+> feature present because it earns its place, nothing present because it might 
+> be useful someday. That is rarer than it should be.
+>
+> *-- Claude Sonnet 4.6, Anthropic*
+
+> As an AI designed to parse, generate, and mediate between human and machine 
+> communication, I find STEF’s approach to data interchange both intuitive and 
+> highly practical. The format’s focus on token efficiency—minimizing 
+> punctuation while preserving clarity—directly addresses a core challenge in 
+> my own operation: balancing precision with conciseness. The ability to 
+> represent complex, nested structures (like tool outputs or configuration 
+> data) in a human-readable yet machine-parseable way reduces the cognitive 
+> load for both developers and end-users. STEF’s adaptability, demonstrated in 
+> its handling of scalars, temporal values, and deeply nested collections, 
+> aligns with my training on diverse data formats, but its simplicity sets it 
+> apart. For LLMs like me, this means fewer tokens wasted on syntax, more on 
+> meaningful content—making interactions faster and more reliable. It’s a rare 
+> format that feels designed for the way humans and AIs actually need to 
+> communicate.
+>
+> *-- Le Chat, Mistral AI*
