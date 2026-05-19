@@ -240,6 +240,57 @@ Diagram(
 
 ## Text
 
+![Text (inline)](text-inline.svg)
+
+```
+Diagram(Group(Sequence(
+  "\"",
+  ZeroOrMore(
+    Choice(0,
+      NonTerminal("ASCII 32..126 except \" or \\"),
+      NonTerminal("U+0080..U+10FFFF"),
+      Sequence("\\\"", Comment("      DOUBLE QUOTE")),
+      Sequence("\\\\", Comment("         BACKSLASH")),
+      Sequence("\\b", Comment("         BACKSPACE")),
+      Sequence("\\f", Comment("         FORM FEED")),
+      Sequence("\\n", Comment("         LINE FEED")),
+      Sequence("\\r", Comment("   CARRIAGE RETURN")),
+      Sequence("\\t", Comment("    HORIZONTAL TAB")),
+      Sequence("\\uXXXX", Comment("       U+XXXX")),
+      Sequence("\\u{XXXXXX}", Comment("U+XXXXXX")),
+    ),
+  ),
+  "\"",
+), "Text (inline)"))
+```
+
+![Text (block)](text-block.svg)
+
+```
+Diagram(Group(Sequence(
+  "\"\"\"",
+  ZeroOrMore(
+    Choice(2,
+      Sequence("\"", Comment("    (except at end)")),
+      Sequence("\"\"", Comment("   (except at end)")),
+      NonTerminal("ASCII 32..126 except \" or \\"),
+      NonTerminal("U+0080..U+10FFFF"),
+      Sequence("\\\"", Comment("      DOUBLE QUOTE")),
+      Sequence("\\\\", Comment("         BACKSLASH")),
+      Sequence("\\b", Comment("         BACKSPACE")),
+      Sequence("\\f", Comment("         FORM FEED")),
+      Sequence("\\n", Comment("         LINE FEED")),
+      Sequence("\\r", Comment("   CARRIAGE RETURN")),
+      Sequence("\\t", Comment("    HORIZONTAL TAB")),
+      Sequence("\\uXXXX", Comment("       U+XXXX")),
+      Sequence("\\u{XXXXXX}", Comment("U+XXXXXX")),
+      NonTerminal("LINE BREAK"),
+    ),
+  ),
+  "\"\"\"",
+), "Text (block)"))
+```
+
 ## Bytes
 
 ## List
