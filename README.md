@@ -65,10 +65,10 @@ Read the full [specification](STEF.md).
 
 ### Text
 
-#### Inline form
+#### Inline text
 ![Text (inline)](diagrams/text-inline.svg)
 
-#### Block form
+#### Block text
 ![Text (block)](diagrams/text-block.svg)
 
 ### Bytes
