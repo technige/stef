@@ -124,12 +124,15 @@ infinity        := "infinity"/i
 ```
 
 
-Temporal values include dates, times and timestamps. ISO 8601 formatting is
-used to represent values according to the Gregorian calendar and the 24-hour
-clock.
+Temporal values include dates, times, timestamps and durations. ISO 8601
+formatting is used to represent date, time, and timestamp values according to
+the Gregorian calendar and the 24-hour clock. Duration values chain together
+a count of days, hours, minutes and seconds. Such counts must be listed in
+order and must be contiguous. Parsers should reject duration values with
+non-contiguous components.
 
 ```
-temporal        := date | time | timestamp
+temporal        := date | time | timestamp | duration
 date            := digit*4 "-" digit*2 "-" digit*2
 hh-mm           := digit*2 ":" digit*2
 hh-mm-ss        := hh-mm ":" digit*2 ("." digit+)?
@@ -137,6 +140,11 @@ time            := hh-mm | hh-mm-ss
 time-zone       := "Z"/i | sign hh-mm
 time_with_zone  := time time-zone?
 timestamp       := date "T"/i time
+duration        := days | hours | minutes | seconds
+days            := integer "d"/i hours?
+hours           := integer "h"/i minutes?
+minutes         := integer "m"/i seconds?
+seconds         := integer "s"/i
 ```
 
 

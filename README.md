@@ -9,7 +9,7 @@ improve communication between humans and machines. The design focuses on
 the efficient use of tokens to maximise content over punctuation.
 
 ```
-( David Bowie — born David Robert Jones in Brixton, 1947.
+( David Bowie - born David Robert Jones in Brixton, 1947.
   Singer, songwriter, and serial reinventor; 26 studio albums
   across five decades. )
 name: "David Bowie"
@@ -21,9 +21,9 @@ alter_egos: ["Ziggy Stardust", "Aladdin Sane", "The Thin White Duke"]
 
 - title: "Hunky Dory",   released: 1971-12-17, uk_chart: 3
 - title: "Aladdin Sane", released: 1973-04-13, uk_chart: 1
-- title: Low,            released: 1977-01-14, uk_chart: 2
+- title: "Low",          released: 1977-01-14, uk_chart: 2
 - title: "Let's Dance",  released: 1983-04-14, uk_chart: 1
-- title: Blackstar,      released: 2016-01-08, uk_chart: 1 (released two days before his death)
+- title: "Blackstar",    released: 2016-01-08, uk_chart: 1 (released two days before his death)
 ```
 
 Read the full [specification](STEF.md).
@@ -40,6 +40,7 @@ Read the full [specification](STEF.md).
 | date       | `2016-01-10`                         | calendar date (ISO 8601)                                                                |
 | time       | `12:34:56.789`, `10:08+02:00`        | clock time (ISO 8601), optionally with time zone                                        |    
 | timestamp  | `1999-12-31T23:59:59.999999Z`        | date and time, optionally with time zone                                                |          
+| duration   | `3d12h30m`, `0h`, `5m06s`            | time duration (days, hours, minutes, seconds)                                           |          
 | text       | `"hello, world"`, `token`, `"\r\n"`  | Unicode text string                                                                     |
 | bytes      | `'57EF CAFE'`, `'#ffc033'`           | hexadecimal byte string                                                                 |
 | list       | `[1, true, 3.1415]`                  | ordered sequence of values                                                              |
@@ -79,6 +80,7 @@ event record and its setlist form two paragraphs in one stream:
 (Oasis at Knebworth, 10 August 1996)
 venue: Knebworth
 date: 1996-08-10
+duration: 2h
 attendance: 125000 (one of two sold-out nights; 2.6 million people applied for tickets)
 
 - Acquiesce
@@ -101,18 +103,18 @@ title: "The Dark Side of the Moon"
 released: 1973-03-01
 label: Harvest
 side_a: [
-  {n: 1, title: "Speak to Me",              seconds: 68},
-  {n: 2, title: Breathe,                    seconds: 163},
-  {n: 3, title: "On the Run",               seconds: 210},
-  {n: 4, title: Time,                       seconds: 413},
-  {n: 5, title: "The Great Gig in the Sky", seconds: 284}
+  {n:  1, title: "Speak to Me",              duration: 1m08s},
+  {n:  2, title: "Breathe",                  duration: 2m43s},
+  {n:  3, title: "On the Run",               duration: 3m30s},
+  {n:  4, title: "Time",                     duration: 6m53s},
+  {n:  5, title: "The Great Gig in the Sky", duration: 4m44s}
 ]
 side_b: [
-  {n: 6, title: Money,                 seconds: 382},
-  {n: 7, title: "Us and Them",         seconds: 469},
-  {n: 8, title: "Any Colour You Like", seconds: 206},
-  {n: 9, title: "Brain Damage",        seconds: 227},
-  {n: 10, title: Eclipse,              seconds: 126}
+  {n:  6, title: "Money",               duration: 6m22s},
+  {n:  7, title: "Us and Them",         duration: 7m49s},
+  {n:  8, title: "Any Colour You Like", duration: 3m26s},
+  {n:  9, title: "Brain Damage",        duration: 3m47s},
+  {n: 10, title: "Eclipse",             duration: 2m06s}
 ]
 ```
 
@@ -129,8 +131,8 @@ studio_albums: 16 (five with The Police (1977-1984), eleven solo)
 biography: """
   Gordon Sumner acquired his nickname from a yellow-and-black striped sweater
   he habitually wore. A schoolteacher in Newcastle before moving to London
-  in 1977, he became the bassist and frontman of The Police — one of the
-  best-selling acts of the early 1980s — before launching a solo career
+  in 1977, he became the bassist and frontman of The Police - one of the
+  best-selling acts of the early 1980s - before launching a solo career
   that drew on jazz, classical, and world music.
   """
 ```
