@@ -98,6 +98,12 @@ is typically assumed that 64-bit signed integers and 64-bit floating point
 numbers are represented. Provision is also made for out-of-range values with
 `infinity` and `NaN`.
 
+Underscores are permitted in sequences of decimal and hexadecimal digits as
+separators. The grammar makes no restriction of where these may be placed, or
+how many, aside from the requirement that the first character is always a
+digit. Emitters may choose any valid underscore-separation strategy for output.
+Parsers must ignore underscores in digit sequences.
+
 Emitters should generally prefer to output the simplest form of a number
 where multiple options are available. Therefore, `1.0` is preferred to `+1.0`
 or `1.0e0`. However, implementations may choose to output any valid form.
@@ -105,19 +111,22 @@ Parsers should gracefully accept any valid form.
 
 ```
 numeric         := number | not-a-number
-number          := sign? (integer | hex-integer | float | infinity)
+number          := sign? (integer | float | infinity)
 
 sign            := "+" | "-"
 digit           := "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+digit-seq       := digit (digit | "_")*
 hex-upper       := "A" | "B" | "C" | "D" | "E" | "F"
 hex-lower       := "a" | "b" | "c" | "d" | "e" | "f"
 hex-digit       := digit | hex-upper | hex-lower
+hex-digit-seq   := hex-digit (hex-digit | "_")*
 
-integer         := digit+
-hex-integer     := "0x" hex-digit+
+integer         := dec-integer | hex-integer
+dec-integer     := digit-seq
+hex-integer     := "0x" hex-digit-seq
 float           := integer fraction exponent?
-fraction        := "." digit+
-exponent        := "e"/i sign? digit+
+fraction        := "." digit-seq
+exponent        := "e"/i sign? digit-seq
 
 not-a-number    := "NaN"/i
 infinity        := "infinity"/i
@@ -133,18 +142,23 @@ non-contiguous components.
 
 ```
 temporal        := date | time | timestamp | duration
+
 date            := digit*4 "-" digit*2 "-" digit*2
-hh-mm           := digit*2 ":" digit*2
-hh-mm-ss        := hh-mm ":" digit*2 ("." digit+)?
-time            := hh-mm | hh-mm-ss
+
+time            := time-naive | time-aware
+time-aware      := time-naive time-zone
+time-naive      := hh-mm | hh-mm-ss
 time-zone       := "Z"/i | sign hh-mm
-time_with_zone  := time time-zone?
+hh-mm-ss        := hh-mm ":" digit*2 ("." digit+)?
+hh-mm           := digit*2 ":" digit*2
+
 timestamp       := date "T"/i time
+
 duration        := days | hours | minutes | seconds
-days            := integer "d"/i hours?
-hours           := integer "h"/i minutes?
-minutes         := integer "m"/i seconds?
-seconds         := integer "s"/i
+days            := digit* "d"/i hours?
+hours           := digit* "h"/i minutes?
+minutes         := digit* "m"/i seconds?
+seconds         := digit* "s"/i
 ```
 
 

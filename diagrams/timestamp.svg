@@ -1,0 +1,298 @@
+<svg class="railroad-diagram" width="530" height="374" viewBox="0 0 530 374" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g transform="translate(.5 .5)">
+<g>
+<path d="M20 73v20m10 -20v20m-10 -10h20"></path>
+</g>
+<path d="M40 83h10"></path>
+<g>
+<path d="M50 83h0"></path>
+<path d="M480 334h0"></path>
+<rect x="50" y="36" width="430" height="318" rx="10" ry="10" class="group-box"></rect>
+<g>
+<path d="M50 83h10"></path>
+<path d="M60 83h10"></path>
+<g>
+<path d="M70 83h20"></path>
+<path d="M440 83h20"></path>
+<g>
+<path d="M90 83h0"></path>
+<path d="M390 83h0"></path>
+<rect x="90" y="62" width="300" height="42" rx="10" ry="10" class="group-box"></rect>
+<g>
+<path d="M90 83h10"></path>
+<path d="M380 83h10"></path>
+<g class="non-terminal ">
+<path d="M100 83h0"></path>
+<path d="M160 83h0"></path>
+<rect x="100" y="72" width="60" height="22"></rect>
+<text x="130" y="87">YYYY</text>
+</g>
+<path d="M160 83h10"></path>
+<path d="M170 83h10"></path>
+<g class="terminal ">
+<path d="M180 83h0"></path>
+<path d="M210 83h0"></path>
+<rect x="180" y="72" width="30" height="22" rx="10" ry="10"></rect>
+<text x="195" y="87">-</text>
+</g>
+<path d="M210 83h10"></path>
+<path d="M220 83h10"></path>
+<g class="non-terminal ">
+<path d="M230 83h0"></path>
+<path d="M270 83h0"></path>
+<rect x="230" y="72" width="40" height="22"></rect>
+<text x="250" y="87">MM</text>
+</g>
+<path d="M270 83h10"></path>
+<path d="M280 83h10"></path>
+<g class="terminal ">
+<path d="M290 83h0"></path>
+<path d="M320 83h0"></path>
+<rect x="290" y="72" width="30" height="22" rx="10" ry="10"></rect>
+<text x="305" y="87">-</text>
+</g>
+<path d="M320 83h10"></path>
+<path d="M330 83h10"></path>
+<g class="non-terminal ">
+<path d="M340 83h0"></path>
+<path d="M380 83h0"></path>
+<rect x="340" y="72" width="40" height="22"></rect>
+<text x="360" y="87">DD</text>
+</g>
+</g>
+<g class="comment ">
+<path d="M90 54h0"></path>
+<path d="M132 54h0"></path>
+<text x="111" y="59" class="comment">date</text>
+</g>
+</g>
+<path d="M390 83h10"></path>
+<path d="M400 83h10"></path>
+<g class="terminal ">
+<path d="M410 83h0"></path>
+<path d="M440 83h0"></path>
+<rect x="410" y="72" width="30" height="22" rx="10" ry="10"></rect>
+<text x="425" y="87">T</text>
+</g>
+</g>
+<path d="M460 83a10 10 0 0 1 10 10v11a10 10 0 0 1 -10 10h-390a10 10 0 0 0 -10 10v27a10 10 0 0 0 10 10"></path>
+<g>
+<path d="M70 161h10"></path>
+<path d="M450 334h10"></path>
+<rect x="80" y="140" width="370" height="204" rx="10" ry="10" class="group-box"></rect>
+<g>
+<path d="M80 161h10"></path>
+<path d="M90 161h10"></path>
+<g>
+<path d="M100 161h20"></path>
+<path d="M410 161h20"></path>
+<g class="non-terminal ">
+<path d="M120 161h0"></path>
+<path d="M160 161h0"></path>
+<rect x="120" y="150" width="40" height="22"></rect>
+<text x="140" y="165">hh</text>
+</g>
+<path d="M160 161h10"></path>
+<path d="M170 161h10"></path>
+<g class="terminal ">
+<path d="M180 161h0"></path>
+<path d="M210 161h0"></path>
+<rect x="180" y="150" width="30" height="22" rx="10" ry="10"></rect>
+<text x="195" y="165">:</text>
+</g>
+<path d="M210 161h10"></path>
+<path d="M220 161h10"></path>
+<g class="non-terminal ">
+<path d="M230 161h0"></path>
+<path d="M270 161h0"></path>
+<rect x="230" y="150" width="40" height="22"></rect>
+<text x="250" y="165">mm</text>
+</g>
+<path d="M270 161h10"></path>
+<g>
+<path d="M280 161h0"></path>
+<path d="M410 161h0"></path>
+<path d="M280 161h20"></path>
+<g>
+<path d="M300 161h0"></path>
+<path d="M390 161h0"></path>
+<g class="terminal ">
+<path d="M300 161h0"></path>
+<path d="M330 161h0"></path>
+<rect x="300" y="150" width="30" height="22" rx="10" ry="10"></rect>
+<text x="315" y="165">:</text>
+</g>
+<path d="M330 161h10"></path>
+<path d="M340 161h10"></path>
+<g class="non-terminal ">
+<path d="M350 161h0"></path>
+<path d="M390 161h0"></path>
+<rect x="350" y="150" width="40" height="22"></rect>
+<text x="370" y="165">ss</text>
+</g>
+</g>
+<path d="M390 161h20"></path>
+<path d="M280 161a10 10 0 0 1 10 10v1a10 10 0 0 0 10 10"></path>
+<g>
+<path d="M300 182h90"></path>
+</g>
+<path d="M390 182a10 10 0 0 0 10 -10v-1a10 10 0 0 1 10 -10"></path>
+</g>
+</g>
+<path d="M430 161a10 10 0 0 1 10 10v11a10 10 0 0 1 -10 10h-330a10 10 0 0 0 -10 10v122a10 10 0 0 0 10 10"></path>
+<g>
+<path d="M100 334h0"></path>
+<path d="M430 334h0"></path>
+<path d="M100 334a10 10 0 0 0 10 -10v-43a10 10 0 0 1 10 -10"></path>
+<g>
+<path d="M120 271h0"></path>
+<path d="M410 271h0"></path>
+<rect x="120" y="218" width="290" height="106" rx="10" ry="10" class="group-box"></rect>
+<g>
+<path d="M120 271h10"></path>
+<path d="M400 271h10"></path>
+<g>
+<path d="M130 271h0"></path>
+<path d="M400 271h0"></path>
+<path d="M130 271a10 10 0 0 0 10 -10v-12a10 10 0 0 1 10 -10"></path>
+<g class="terminal ">
+<path d="M150 239h100"></path>
+<path d="M280 239h100"></path>
+<rect x="250" y="228" width="30" height="22" rx="10" ry="10"></rect>
+<text x="265" y="243">Z</text>
+</g>
+<path d="M380 239a10 10 0 0 1 10 10v12a10 10 0 0 0 10 10"></path>
+<path d="M130 271h20"></path>
+<g>
+<path d="M150 271h0"></path>
+<path d="M380 271h0"></path>
+<g>
+<path d="M150 271h0"></path>
+<path d="M220 271h0"></path>
+<path d="M150 271h20"></path>
+<g class="terminal ">
+<path d="M170 271h0"></path>
+<path d="M200 271h0"></path>
+<rect x="170" y="260" width="30" height="22" rx="10" ry="10"></rect>
+<text x="185" y="275">+</text>
+</g>
+<path d="M200 271h20"></path>
+<path d="M150 271a10 10 0 0 1 10 10v12a10 10 0 0 0 10 10"></path>
+<g class="terminal ">
+<path d="M170 303h0"></path>
+<path d="M200 303h0"></path>
+<rect x="170" y="292" width="30" height="22" rx="10" ry="10"></rect>
+<text x="185" y="307">-</text>
+</g>
+<path d="M200 303a10 10 0 0 0 10 -10v-12a10 10 0 0 1 10 -10"></path>
+</g>
+<path d="M220 271h10"></path>
+<g class="non-terminal ">
+<path d="M230 271h0"></path>
+<path d="M270 271h0"></path>
+<rect x="230" y="260" width="40" height="22"></rect>
+<text x="250" y="275">hh</text>
+</g>
+<path d="M270 271h10"></path>
+<path d="M280 271h10"></path>
+<g class="terminal ">
+<path d="M290 271h0"></path>
+<path d="M320 271h0"></path>
+<rect x="290" y="260" width="30" height="22" rx="10" ry="10"></rect>
+<text x="305" y="275">:</text>
+</g>
+<path d="M320 271h10"></path>
+<path d="M330 271h10"></path>
+<g class="non-terminal ">
+<path d="M340 271h0"></path>
+<path d="M380 271h0"></path>
+<rect x="340" y="260" width="40" height="22"></rect>
+<text x="360" y="275">mm</text>
+</g>
+</g>
+<path d="M380 271h20"></path>
+</g>
+</g>
+<g class="comment ">
+<path d="M120 210h0"></path>
+<path d="M202 210h0"></path>
+<text x="161" y="215" class="comment">time zone</text>
+</g>
+</g>
+<path d="M410 271a10 10 0 0 1 10 10v43a10 10 0 0 0 10 10"></path>
+<path d="M100 334h20"></path>
+<g>
+<path d="M120 334h290"></path>
+</g>
+<path d="M410 334h20"></path>
+</g>
+<path d="M430 334h10"></path>
+<path d="M440 334h10"></path>
+</g>
+<g class="comment ">
+<path d="M80 132h0"></path>
+<path d="M122 132h0"></path>
+<text x="101" y="137" class="comment">time</text>
+</g>
+</g>
+<path d="M460 334h10"></path>
+<path d="M470 334h10"></path>
+</g>
+<g class="comment ">
+<path d="M50 28h0"></path>
+<path d="M132 28h0"></path>
+<text x="91" y="33" class="comment">Timestamp</text>
+</g>
+</g>
+<path d="M480 334h10"></path>
+<path d="M 490 334 h 20 m -10 -10 v 20 m 10 -20 v 20"></path>
+</g>
+<style>
+	svg {
+		background-color: hsl(30,20%,95%);
+	}
+	path {
+		stroke-width: 3;
+		stroke: black;
+		fill: rgba(0,0,0,0);
+	}
+	text {
+		font: bold 14px monospace;
+		text-anchor: middle;
+		white-space: pre;
+	}
+	text.diagram-text {
+		font-size: 12px;
+	}
+	text.diagram-arrow {
+		font-size: 16px;
+	}
+	text.label {
+		text-anchor: start;
+	}
+	text.comment {
+		font: italic 12px monospace;
+	}
+	g.non-terminal text {
+		/&#42;font-style: italic;&#42;/
+	}
+	rect {
+		stroke-width: 3;
+		stroke: black;
+		fill: hsl(120,100%,90%);
+	}
+	rect.group-box {
+		stroke: gray;
+		stroke-dasharray: 10 5;
+		fill: none;
+	}
+	path.diagram-text {
+		stroke-width: 3;
+		stroke: black;
+		fill: white;
+		cursor: help;
+	}
+	g.diagram-text:hover path.diagram-text {
+		fill: #eee;
+	}</style>
+</svg>

@@ -31,20 +31,45 @@ Read the full [specification](STEF.md).
 
 ## Type system
 
-| Type       | Quick examples                       | Description                                                                             |
-|------------|--------------------------------------|-----------------------------------------------------------------------------------------|
-| null       | `null`                               | absence of value or unknown value                                                       |
-| boolean    | `true`, `false`                      | logical truth value, 1 or 0, yes or no                                                  |
-| integer    | `123`, `-42`, `0xFFC033`, `0`        | signed whole number                                                                     |
-| float      | `3.14`, `1e06`, `NaN`, `+infinity`   | [floating point](https://en.wikipedia.org/wiki/Floating-point_arithmetic) (real) number |
-| date       | `2016-01-10`                         | calendar date (ISO 8601)                                                                |
-| time       | `12:34:56.789`, `10:08+02:00`        | clock time (ISO 8601), optionally with time zone                                        |    
-| timestamp  | `1999-12-31T23:59:59.999999Z`        | date and time, optionally with time zone                                                |          
-| duration   | `3d12h30m`, `0h`, `5m06s`            | time duration (days, hours, minutes, seconds)                                           |          
-| text       | `"hello, world"`, `token`, `"\r\n"`  | Unicode text string                                                                     |
-| bytes      | `'57EF CAFE'`, `'#ffc033'`           | hexadecimal byte string                                                                 |
-| list       | `[1, true, 3.1415]`                  | ordered sequence of values                                                              |
-| dictionary | `{Alice: {age: 33}, Bob: {age: 44}}` | unordered set of key-value pairs                                                        |
+### Null
+
+![Null](diagrams/null.svg)
+
+### Boolean
+
+![Boolean](diagrams/boolean.svg)
+
+### Integer
+
+![Integer](diagrams/integer.svg)
+
+### Float
+
+![Float](diagrams/float.svg)
+
+### Date
+
+![Date](diagrams/date.svg)
+
+### Time
+
+![Time](diagrams/time.svg)
+
+### Timestamp
+
+![Timestamp](diagrams/timestamp.svg)
+
+### Duration
+
+![Duration](diagrams/duration.svg)
+
+### Text
+
+### Bytes
+
+### List
+
+### Dictionary
 
 
 ## More examples

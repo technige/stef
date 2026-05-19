@@ -4,7 +4,7 @@ https://stef.nige.tech
 """
 
 
-from datetime import date, time, datetime
+from datetime import date, time, datetime, timedelta
 from io import StringIO
 from json import dumps as json_dumps
 from re import compile as regex
@@ -62,6 +62,12 @@ class Integer(_Commented, int):
 
     def __str__(self):
         if self._base == 16:
+            return f"{self.sign}0x{abs(self):0{self._width}X}"
+        else:
+            return f"{self.sign}{abs(self):0{self._width}}"
+
+    def to_str(self, base=10):
+        if base == 16:
             return f"{self.sign}0x{abs(self):0{self._width}X}"
         else:
             return f"{self.sign}{abs(self):0{self._width}}"
@@ -202,6 +208,14 @@ class StefWriter:
             self._write_integer(value)
         elif isinstance(value, float):
             self._write_float(value)
+        elif isinstance(value, date):
+            self._write_date(value)
+        elif isinstance(value, time):
+            self._write_time(value)
+        elif isinstance(value, datetime):
+            self._write_timestamp(value)
+        elif isinstance(value, timedelta):
+            self._write_duration(value)
         elif isinstance(value, str):
             self._write_text(value)
         elif isinstance(value, (bytes, bytearray)):
@@ -220,11 +234,14 @@ class StefWriter:
     def _write_boolean(self, value):
         self._buffer.append("true" if value else "false")
 
-    def _write_integer(self, value):
+    def _write_integer(self, value, base=10):
         self._buffer.append(str(value))
 
     def _write_float(self, data):
         self._buffer.append(str(data))
+
+    def _write_date(self, data):
+        self._buffer.append(data.isoformat())
 
     def _write_text(self, data):
         self._buffer.append(json_dumps(str(data)))
