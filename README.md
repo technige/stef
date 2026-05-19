@@ -73,6 +73,12 @@ Read the full [specification](STEF.md).
 
 ### Bytes
 
+#### Inline bytes
+![Bytes (inline)](diagrams/bytes-inline.svg)
+
+#### Block bytes
+![Bytes (block)](diagrams/bytes-block.svg)
+
 ### List
 
 ### Dictionary

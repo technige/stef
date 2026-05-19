@@ -1,4 +1,4 @@
-<svg class="railroad-diagram" width="590" height="438" viewBox="0 0 590 438" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg class="railroad-diagram" width="590" height="470" viewBox="0 0 590 470" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g transform="translate(.5 .5)">
 <g>
 <path d="M20 57v20m10 -20v20m-10 -10h20"></path>
@@ -7,7 +7,7 @@
 <g>
 <path d="M50 67h0"></path>
 <path d="M540 67h0"></path>
-<rect x="50" y="36" width="490" height="382" rx="10" ry="10" class="group-box"></rect>
+<rect x="50" y="36" width="490" height="414" rx="10" ry="10" class="group-box"></rect>
 <g>
 <path d="M50 67h10"></path>
 <path d="M530 67h10"></path>
@@ -221,13 +221,32 @@
 </g>
 </g>
 <path d="M440 387a10 10 0 0 0 10 -10v-300a10 10 0 0 1 10 -10"></path>
+<path d="M130 67a10 10 0 0 1 10 10v332a10 10 0 0 0 10 10"></path>
+<g>
+<path d="M150 419h36"></path>
+<path d="M404 419h36"></path>
+<g class="terminal ">
+<path d="M186 419h0"></path>
+<path d="M246 419h0"></path>
+<rect x="186" y="408" width="60" height="22" rx="10" ry="10"></rect>
+<text x="216" y="423">\xXX</text>
+</g>
+<path d="M246 419h10"></path>
+<path d="M256 419h10"></path>
+<g class="comment ">
+<path d="M266 419h0"></path>
+<path d="M404 419h0"></path>
+<text x="335" y="424" class="comment">   ASCII char XX</text>
+</g>
+</g>
+<path d="M440 419a10 10 0 0 0 10 -10v-332a10 10 0 0 1 10 -10"></path>
 </g>
 <path d="M460 67h10"></path>
-<path d="M130 67a10 10 0 0 0 -10 10v321a10 10 0 0 0 10 10"></path>
+<path d="M130 67a10 10 0 0 0 -10 10v353a10 10 0 0 0 10 10"></path>
 <g>
-<path d="M130 408h330"></path>
+<path d="M130 440h330"></path>
 </g>
-<path d="M460 408a10 10 0 0 0 10 -10v-321a10 10 0 0 0 -10 -10"></path>
+<path d="M460 440a10 10 0 0 0 10 -10v-353a10 10 0 0 0 -10 -10"></path>
 </g>
 <path d="M470 67h20"></path>
 </g>
@@ -241,8 +260,8 @@
 </g>
 <g class="comment ">
 <path d="M50 28h0"></path>
-<path d="M92 28h0"></path>
-<text x="71" y="33" class="comment">Text</text>
+<path d="M164 28h0"></path>
+<text x="107" y="33" class="comment">Text (inline)</text>
 </g>
 </g>
 <path d="M540 67h10"></path>

@@ -1,4 +1,4 @@
-<svg class="railroad-diagram" width="630" height="534" viewBox="0 0 630 534" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg class="railroad-diagram" width="630" height="566" viewBox="0 0 630 566" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g transform="translate(.5 .5)">
 <g>
 <path d="M20 121v20m10 -20v20m-10 -10h20"></path>
@@ -7,7 +7,7 @@
 <g>
 <path d="M50 131h0"></path>
 <path d="M580 131h0"></path>
-<rect x="50" y="36" width="530" height="478" rx="10" ry="10" class="group-box"></rect>
+<rect x="50" y="36" width="530" height="510" rx="10" ry="10" class="group-box"></rect>
 <g>
 <path d="M50 131h10"></path>
 <path d="M570 131h10"></path>
@@ -260,20 +260,39 @@
 </g>
 <path d="M460 451a10 10 0 0 0 10 -10v-300a10 10 0 0 1 10 -10"></path>
 <path d="M150 131a10 10 0 0 1 10 10v332a10 10 0 0 0 10 10"></path>
-<g class="non-terminal ">
-<path d="M170 483h85"></path>
-<path d="M375 483h85"></path>
-<rect x="255" y="472" width="120" height="22"></rect>
-<text x="315" y="487">LINE BREAK</text>
+<g>
+<path d="M170 483h36"></path>
+<path d="M424 483h36"></path>
+<g class="terminal ">
+<path d="M206 483h0"></path>
+<path d="M266 483h0"></path>
+<rect x="206" y="472" width="60" height="22" rx="10" ry="10"></rect>
+<text x="236" y="487">\xXX</text>
+</g>
+<path d="M266 483h10"></path>
+<path d="M276 483h10"></path>
+<g class="comment ">
+<path d="M286 483h0"></path>
+<path d="M424 483h0"></path>
+<text x="355" y="488" class="comment">   ASCII char XX</text>
+</g>
 </g>
 <path d="M460 483a10 10 0 0 0 10 -10v-332a10 10 0 0 1 10 -10"></path>
+<path d="M150 131a10 10 0 0 1 10 10v364a10 10 0 0 0 10 10"></path>
+<g class="non-terminal ">
+<path d="M170 515h85"></path>
+<path d="M375 515h85"></path>
+<rect x="255" y="504" width="120" height="22"></rect>
+<text x="315" y="519">LINE BREAK</text>
+</g>
+<path d="M460 515a10 10 0 0 0 10 -10v-364a10 10 0 0 1 10 -10"></path>
 </g>
 <path d="M480 131h10"></path>
-<path d="M150 131a10 10 0 0 0 -10 10v353a10 10 0 0 0 10 10"></path>
+<path d="M150 131a10 10 0 0 0 -10 10v385a10 10 0 0 0 10 10"></path>
 <g>
-<path d="M150 504h330"></path>
+<path d="M150 536h330"></path>
 </g>
-<path d="M480 504a10 10 0 0 0 10 -10v-353a10 10 0 0 0 -10 -10"></path>
+<path d="M480 536a10 10 0 0 0 10 -10v-385a10 10 0 0 0 -10 -10"></path>
 </g>
 <path d="M490 131h20"></path>
 </g>

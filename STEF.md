@@ -187,10 +187,11 @@ hexadecimal characters in distinct pairs is strongly advised.
 ```
 string          := IDENTIFIER | text | bytes | block-text | block-bytes
 
-escape          := '\"' | "\\" | "\/" | "\b" | "\f" | "\n" | "\r" | "\t" | u-escape
+escape          := '\"' | "\\" | "\/" | "\b" | "\f" | "\n" | "\r" | "\t" | u-escape | x-escape
 u-escape        := u4-escape | u6-escape
 u4-escape       := "\u" hex-digit*4
 u6-escape       := "\u" "{" hex-digit+ "}"
+x-escape        := "\x" hex-digit*2
 
 text-char       := inline-char EXCEPT "\" EXCEPT '"'
 text-atom       := text-char | escape
@@ -203,10 +204,10 @@ block-text      := '"""' block-text-seq* '"""'
 
 hex-pair        := hex-digit*2
 hex-symbol      := "#" | "$" | "%" | "&" | "-" | "." | ":" | "[" | "]" | "0x" | "U+" | "\x" | "x"
-hex-deco        := (hex-symbol | inline-space)*
+hex-deco        := (hex-symbol | space)*
 bytes           := "'" hex-deco (hex-pair hex-deco)* "'"
 
-block-hex-deco  := (hex-symbol | white-space)*
+block-hex-deco  := (hex-symbol | space | line-break)*
 block-bytes-seq := block-hex-deco (hex-pair block-hex-deco)*
 block-bytes     := "'''" block-bytes-seq "'''"
 ```

@@ -258,6 +258,7 @@ Diagram(Group(Sequence(
       Sequence("\\t", Comment("    HORIZONTAL TAB")),
       Sequence("\\uXXXX", Comment("       U+XXXX")),
       Sequence("\\u{XXXXXX}", Comment("U+XXXXXX")),
+      Sequence("\\xXX", Comment("   ASCII char XX")),
     ),
   ),
   "\"",
@@ -284,6 +285,7 @@ Diagram(Group(Sequence(
       Sequence("\\t", Comment("    HORIZONTAL TAB")),
       Sequence("\\uXXXX", Comment("       U+XXXX")),
       Sequence("\\u{XXXXXX}", Comment("U+XXXXXX")),
+      Sequence("\\xXX", Comment("   ASCII char XX")),
       NonTerminal("LINE BREAK"),
     ),
   ),
@@ -292,6 +294,47 @@ Diagram(Group(Sequence(
 ```
 
 ## Bytes
+
+![Bytes (inline)](bytes-inline.svg)
+
+```
+Diagram(Group(Sequence(
+  "'",
+  ZeroOrMore(
+    Choice(0,
+      Sequence(NonTerminal("0..F"), NonTerminal("0..F")),
+      NonTerminal("any of # $ % & - . : [ ]"),
+      Sequence("0x"),
+      Sequence("U+"),
+      Sequence("\\x"),
+      Sequence("x"),
+      NonTerminal("SP or HT"),
+    ),
+  ),
+  "'",
+), "Bytes (inline)"))
+```
+
+![Bytes (block)](bytes-block.svg)
+
+```
+Diagram(Group(Sequence(
+  "'''",
+  ZeroOrMore(
+    Choice(0,
+      Sequence(NonTerminal("0..F"), NonTerminal("0..F")),
+      NonTerminal("any of # $ % & - . : [ ]"),
+      Sequence("0x"),
+      Sequence("U+"),
+      Sequence("\\x"),
+      Sequence("x"),
+      NonTerminal("SP or HT"),
+      NonTerminal("LINE BREAK"),
+    ),
+  ),
+  "'''",
+), "Bytes (block)"))
+```
 
 ## List
 
