@@ -9,9 +9,9 @@ improve communication between humans and machines. The design focuses on
 the efficient use of tokens to maximise content over punctuation.
 
 ```
-( David Bowie - born David Robert Jones in Brixton, 1947.
-  Singer, songwriter, and serial reinventor; 26 studio albums
-  across five decades. )
+( 👨🏻‍🎤 David Bowie - born David Robert Jones in Brixton, 1947.
+     Singer, songwriter, and serial reinventor; 26 studio 
+     albums across five decades. )
 name: "David Bowie"
 born: 1947-01-08
 birthplace: Brixton
