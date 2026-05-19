@@ -1,0 +1,18 @@
+{
+  "name": "steflib",
+  "version": "0.1.0",
+  "description": "JavaScript implementation of STEF (Simple Token-Efficient Format)",
+  "type": "module",
+  "exports": "./src/index.js",
+  "files": ["src/index.js"],
+  "scripts": {
+    "test": "node --test tests/steflib.test.js"
+  },
+  "license": "MIT",
+  "author": "Nigel Small",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/technige/stef"
+  },
+  "homepage": "https://stef.nige.tech"
+}

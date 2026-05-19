@@ -1,3 +1,16 @@
-.py[co]
-__pycache__
+# Project
 .idea
+
+# Python
+__pycache__/
+*.py[co]
+.venv/
+dist/
+*.egg-info/
+.tox/
+
+# JavaScript
+node_modules/
+
+# Rust
+target/

@@ -1,0 +1,14 @@
+[package]
+name = "steflib"
+version = "0.1.0"
+edition = "2021"
+description = "Rust implementation of STEF (Simple Token-Efficient Format)"
+license = "MIT"
+authors = ["Nigel Small"]
+repository = "https://github.com/technige/stef"
+homepage = "https://stef.nige.tech"
+readme = "README.md"
+
+[lib]
+name = "steflib"
+path = "src/lib.rs"
