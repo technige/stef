@@ -12,6 +12,9 @@ from re import compile as regex
 from sys import stdout
 
 
+__version__ = "0.1.0"
+
+
 # TODO: use full Unicode identifier pattern
 identifier = regex(r"^[a-z_][a-z0-9_]*$")
 
@@ -175,6 +178,18 @@ class StefWriter:
         self._paragraphs = 0
         self._buffer = []
         self._stack = []
+
+    def print(self, *values, end="\n"):
+        """ Write a sequence of values.
+
+        This is a convenience function, primarily for interactive use. After
+        writing output, this resets the internal paragraph counter, which is
+        generally used to automatically insert blank lines between paragraphs.
+        """
+        for i, value in enumerate(values):
+            self.write(value)
+        self._out.write(end)
+        self._paragraphs = 0
 
     def write(self, value):
         """ Write a paragraph.

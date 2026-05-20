@@ -4,34 +4,37 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "steflib"
-version = "0.1.0"
+dynamic = ["version"]
 description = "Python implementation of STEF (Simple Token-Efficient Format)"
 readme = "README.md"
-license = {text = "MIT"}
+license = "MIT"
 authors = [
     {name = "Nigel Small"}
 ]
 requires-python = ">=3.9"
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
-    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
 [project.urls]
+Homepage = "https://stef.nige.tech"
 Repository = "https://github.com/technige/stef"
 Documentation = "https://stef.nige.tech"
 
 [tool.setuptools]
 py-modules = ["steflib"]
 package-dir = {"" = "src"}
+
+[tool.setuptools.dynamic]
+version = {attr = "steflib.__version__"}
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -41,5 +44,5 @@ addopts = "-v"
 env_list = ["py39", "py310", "py311", "py312", "py313"]
 
 [tool.tox.env_run_base]
-deps = ["pytest"]
+deps = ["pytest", "pytest-subtests"]
 commands = [["pytest"]]
