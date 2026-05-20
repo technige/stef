@@ -123,41 +123,26 @@ Diagram(
 ![Float](float.svg)
 
 ```
-Diagram(
-  Group(
-    Choice(
-      0,
-      Stack(
-        Group(
-          Sequence(
-            Choice(1, '+', Skip(), '-'),
-            NonTerminal("0..9"),
-            Choice(0, OneOrMore(Choice(1, "_", NonTerminal("0..9"))), Skip())
-          ), "integer"
-        ),
-        Group(
-          Sequence(
-            ".",
-            NonTerminal("0..9"),
-            Choice(0, OneOrMore(Choice(1, "_", NonTerminal("0..9"))), Skip())
-          ), "fraction"
-        ),
-        Choice(
-          0,
-          Skip(),
-          Group(
-            Sequence(
-              "e",
-              Choice(1, '+', Skip(), '-'),
-              NonTerminal("0..9"),
-              Choice(0, OneOrMore(Choice(1, "_", NonTerminal("0..9"))), Skip())
-            ), "exponent"
-          )
-        )
-      ), "NaN", Sequence(Choice(1, '+', Skip(), '-'), "infinity")
-    ), "Float"
-  )
-)
+Diagram(Group(Choice(2,
+  "NaN",
+  Sequence(Choice(1, '+', Skip(), '-'), "infinity"),
+  Stack(
+    Group(Sequence(
+      Choice(1, '+', Skip(), '-'), NonTerminal("0..9"),
+      Choice(0, OneOrMore(Choice(1, "_", NonTerminal("0..9"))), Skip())
+    ), "integer"),
+    OptionalSequence(
+      Group(Sequence(
+        ".", NonTerminal("0..9"),
+        Choice(0, OneOrMore(Choice(1, "_", NonTerminal("0..9"))), Skip())
+      ), "fraction"),
+      Group(Sequence(
+        "e", Choice(1, '+', Skip(), '-'), NonTerminal("0..9"),
+        Choice(0, OneOrMore(Choice(1, "_", NonTerminal("0..9"))), Skip())
+      ), "exponent")
+    ),
+  ),
+), "Float"))
 ```
 
 ## Date

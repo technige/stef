@@ -1,21 +1,123 @@
-from steflib import dumps, Integer
+from datetime import datetime, timedelta
+
+from steflib import dumps, Integer, Float
 
 
-def test_dumps_integer_zero():
-    assert dumps(0) == "0"
+integer_tests = [
+    (0, "0"),
+    (1, "1"),
+    (-1, "-1"),
+    (Integer("0x21", base=16), "33"),
+    (Integer("0x21", base=16, as_hex=True), "0x21"),
+    (Integer(33, width=4, as_hex=True), "0x0021"),
+    (Integer(-33, width=4, as_hex=True), "-0x0021"),
+    (Integer(33, signed=True), "+33"),
+    (Integer(0, signed=True), "0"),
+]
+
+float_tests = [
+    (0.0, "0.0"),
+    (3.14, "3.14"),
+    (-3.14, "-3.14"),
+    (1.0, "1.0"),
+    (1e0, "1.0"),
+    (float("NaN"), "NaN"),
+    (float("inf"), "infinity"),
+    (float("+inf"), "infinity"),
+    (float("-inf"), "-infinity"),
+    (Float(3.14), "3.14"),
+    (Float(3.14, comment="approx"), "3.14 (approx)"),
+]
+
+text_tests = [
+    ("none", 'none'),
+    ("None", 'None'),
+    ("null", '"null"'),
+    ("Null", '"Null"'),
+    ("true", '"true"'),
+    ("True", '"True"'),
+    ("false", '"false"'),
+    ("False", '"False"'),
+    ("infinity", '"infinity"'),
+    ("Infinity", '"Infinity"'),
+    ("NaN", '"NaN"'),
+    ("nan", '"nan"'),
+    ("", '""'),
+    ("hello", 'hello'),
+    ("hello, world", '"hello, world"'),
+]
+
+timestamp_tests = [
+    (datetime(2012, 3, 4, 5, 6, 7), '2012-03-04T05:06:07'),
+]
+
+duration_tests = [
+    (timedelta(days=3), "3d"),
+    (timedelta(days=3, hours=7), "3d07h"),
+    (timedelta(days=3, hours=7, minutes=12), "3d07h12m"),
+    (timedelta(days=3, hours=7, minutes=12, seconds=59), "3d07h12m59s"),
+    (timedelta(hours=7), "7h"),
+    (timedelta(hours=7, minutes=12), "7h12m"),
+    (timedelta(hours=7, minutes=12, seconds=59), "7h12m59s"),
+    (timedelta(minutes=12), "12m"),
+    (timedelta(minutes=12, seconds=59), "12m59s"),
+    (timedelta(seconds=59), "59s"),
+    (timedelta(), "0s"),
+    (timedelta(seconds=86400), "1d"),
+]
 
 
-def test_dumps_integer_plus_one():
-    assert dumps(1) == "1"
+list_tests = [
+    ([], "[]"),
+    ([1], "- 1"),
+    ([1, 2], "- 1\n- 2"),
+]
 
 
-def test_dumps_integer_minus_one():
-    assert dumps(-1) == "-1"
+dictionary_tests = [
+    ({}, "{}"),
+    ({"one": 1}, "one: 1"),
+    ({"one": 1, "two": 2}, "one: 1\ntwo: 2"),
+]
 
 
-def test_dumps_positive_hex_integer():
-    assert dumps(Integer(33, base=16, width=4)) == "0x0021"
+def test_integer_dumps(subtests):
+    for value, output in integer_tests:
+        with subtests.test(f"{value!r} -> {output!r}"):
+            assert dumps(value) == output
 
 
-def test_dumps_negative_hex_integer():
-    assert dumps(Integer(-33, base=16, width=4)) == "-0x0021"
+def test_float_dumps(subtests):
+    for value, output in float_tests:
+        with subtests.test(f"{value!r} -> {output!r}"):
+            assert dumps(value) == output
+
+
+def test_text_dumps(subtests):
+    for value, output in text_tests:
+        with subtests.test(f"{value!r} -> {output!r}"):
+            assert dumps(value) == output
+
+
+def test_timestamp_dumps(subtests):
+    for value, output in timestamp_tests:
+        with subtests.test(f"{value!r} -> {output!r}"):
+            assert dumps(value) == output
+
+
+def test_duration_dumps(subtests):
+    for value, output in duration_tests:
+        with subtests.test(f"{value!r} -> {output!r}"):
+            assert dumps(value) == output
+
+
+def test_list_dumps(subtests):
+    for value, output in list_tests:
+        with subtests.test(f"{value!r} -> {output!r}"):
+            assert dumps(value) == output
+
+
+def test_dictionary_dumps(subtests):
+    for value, output in dictionary_tests:
+        with subtests.test(f"{value!r} -> {output!r}"):
+            assert dumps(value) == output

@@ -74,8 +74,9 @@ Integers can be represented in either decimal (base 10) or hexadecimal
 ### Float
 
 Floats ([floating point numbers](https://en.wikipedia.org/wiki/Floating-point_arithmetic))
-represent real numbers consisting of integer, fraction and optional exponent
-parts. Floats may contain underscores for separation of blocks of digits.
+represent real numbers consisting of integer, fraction and exponent parts.
+A float must contain either a fraction, or an exponent, or both. Floats may
+contain underscores for separation of blocks of digits.
 
 The special values `NaN` and `infinity` may also be used (with any casing).
 

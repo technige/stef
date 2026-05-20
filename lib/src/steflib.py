@@ -7,6 +7,7 @@ https://stef.nige.tech
 from datetime import date, time, datetime, timedelta
 from io import StringIO
 from json import dumps as json_dumps
+from math import isnan, isinf
 from re import compile as regex
 from sys import stdout
 
@@ -47,11 +48,12 @@ class Boolean(_Commented, int):
 
 class Integer(_Commented, int):
 
-    def __new__(cls, value, base=10, width=0, signed=False, comment=None):
-        if isinstance(value, str):
-            value = int(value, base)
-        obj = super().__new__(cls, value)
-        obj._base = 16 if base == 16 else 10
+    def __new__(cls, value, base=None, width=0, signed=False, as_hex=False, comment=None):
+        if base:
+            obj = super().__new__(cls, value, base=base)
+        else:
+            obj = super().__new__(cls, value)
+        obj._as_hex = as_hex
         obj._width = width
         obj._signed = bool(signed)
         obj.__comment__ = comment
@@ -61,16 +63,17 @@ class Integer(_Commented, int):
         return f"{self.__class__.__name__}({int(self)})"
 
     def __str__(self):
-        if self._base == 16:
+        return self.to_str(as_hex=self._as_hex)
+
+    def to_str(self, as_hex=False):
+        if as_hex:
             return f"{self.sign}0x{abs(self):0{self._width}X}"
         else:
             return f"{self.sign}{abs(self):0{self._width}}"
 
-    def to_str(self, base=10):
-        if base == 16:
-            return f"{self.sign}0x{abs(self):0{self._width}X}"
-        else:
-            return f"{self.sign}{abs(self):0{self._width}}"
+    @property
+    def signed(self) -> bool:
+        return self._signed
 
     @property
     def sign(self) -> str:
@@ -82,10 +85,6 @@ class Integer(_Commented, int):
             return "+"
         else:
             return ""
-
-    @property
-    def signed(self) -> bool:
-        return self._signed
 
 
 class Float(_Commented, float):
@@ -125,6 +124,15 @@ class Time(_Commented, time):
 
 
 class Timestamp(_Commented, datetime):
+
+    def __new__(cls, *args, **kwargs):
+        comment = kwargs.pop("comment", None)
+        obj = super().__new__(cls, *args, **kwargs)
+        obj.__comment__ = comment
+        return obj
+
+
+class Duration(_Commented, timedelta):
 
     def __new__(cls, *args, **kwargs):
         comment = kwargs.pop("comment", None)
@@ -191,10 +199,7 @@ class StefWriter:
             self._buffer.append(")")
 
     def _write_key(self, key):
-        if identifier.match(key):
-            self._buffer.append(key)
-        else:
-            self._write_text(key)
+        self._write_text(key)
         self._write_comment(getattr(key, "__comment__", None), prefix=" ")
 
     def _write_value(self, value):
@@ -208,12 +213,14 @@ class StefWriter:
             self._write_integer(value)
         elif isinstance(value, float):
             self._write_float(value)
+        elif isinstance(value, datetime):
+            # IMPORTANT: always test for datetime before date
+            # as the former is a subclass of the latter.
+            self._write_timestamp(value)
         elif isinstance(value, date):
             self._write_date(value)
         elif isinstance(value, time):
             self._write_time(value)
-        elif isinstance(value, datetime):
-            self._write_timestamp(value)
         elif isinstance(value, timedelta):
             self._write_duration(value)
         elif isinstance(value, str):
@@ -234,65 +241,100 @@ class StefWriter:
     def _write_boolean(self, value):
         self._buffer.append("true" if value else "false")
 
-    def _write_integer(self, value, base=10):
+    def _write_integer(self, value):
         self._buffer.append(str(value))
 
-    def _write_float(self, data):
-        self._buffer.append(str(data))
+    def _write_float(self, value):
+        if isnan(value):
+            self._buffer.append("NaN")
+        elif isinf(value):
+            if value > 0:
+                self._buffer.append("infinity")
+            else:
+                self._buffer.append("-infinity")
+        else:
+            self._buffer.append(str(value))
 
-    def _write_date(self, data):
-        self._buffer.append(data.isoformat())
+    def _write_date(self, value):
+        self._buffer.append(value.isoformat())
 
-    def _write_text(self, data):
-        self._buffer.append(json_dumps(str(data)))
+    def _write_time(self, value):
+        self._buffer.append(value.isoformat())
 
-    def _write_bytes(self, data):
+    def _write_timestamp(self, value):
+        self._buffer.append(value.isoformat())
+
+    def _write_duration(self, value):
+        assert isinstance(value, timedelta)
+        # Milliseconds are ignored, as not supported in the spec
+        minutes, seconds = divmod(value.seconds, 60)
+        hours, minutes = divmod(minutes, 60)
+        parts = [(value.days, "d"), (hours, "h"), (minutes, "m"), (seconds, "s")]
+        while parts and parts[0][0] == 0:
+            parts = parts[1:]
+        while parts and parts[-1][0] == 0:
+            parts = parts[:-1]
+        if not parts:
+            parts = [(0, "s")]
+        for i, part in enumerate(parts[1:], start=1):
+            if part[0] < 10:
+                parts[i] = (f"0{part[0]}", part[1])
+        self._buffer.extend(f"{value}{unit}" for value, unit in parts)
+
+    def _write_text(self, value):
+        value = str(value)
+        if identifier.match(value) and not is_reserved(value):
+            self._buffer.append(value)
+        else:
+            self._buffer.append(json_dumps(value))
+
+    def _write_bytes(self, value):
         self._buffer.append("'")
-        self._buffer.extend(f"{b:02X}" for b in bytes(data))
+        self._buffer.extend(f"{b:02X}" for b in bytes(value))
         self._buffer.append("'")
 
-    def _write_list(self, data):
-        data = list(data)
+    def _write_list(self, value):
+        value = list(value)
         depth = len(self._stack)
         self._stack.append("[")
-        if depth == 0:
+        if depth == 0 and len(value) >= 1:
             # block list
-            for i, value in enumerate(data):
+            for i, value in enumerate(value):
                 if i > 0:
                     self._buffer.append("\n")
                 self._buffer.append("- ")
                 self._write_value(value)
-        elif depth == 1 and len(data) >= 2:
+        elif depth == 1 and len(value) >= 2:
             # inline list
-            for i, value in enumerate(data):
+            for i, value in enumerate(value):
                 if i > 0:
                     self._buffer.append(", ")
                 self._write_value(value)
         else:
             # bracketed list
             self._buffer.append("[")
-            for i, value in enumerate(data):
+            for i, value in enumerate(value):
                 if i > 0:
                     self._buffer.append(", ")
                 self._write_value(value)
             self._buffer.append("]")
         self._stack.pop()
 
-    def _write_dictionary(self, data):
-        data = dict(data)
+    def _write_dictionary(self, value):
+        value = dict(value)
         depth = len(self._stack)
         self._stack.append("{")
-        if depth == 0:
+        if depth == 0 and len(value) >= 1:
             # block dictionary
-            for i, (key, value) in enumerate(data.items()):
+            for i, (key, value) in enumerate(value.items()):
                 if i > 0:
                     self._buffer.append("\n")
                 self._write_key(key)
                 self._buffer.append(": ")
                 self._write_value(value)
-        elif depth == 1 and len(data) >= 2:
+        elif depth == 1 and len(value) >= 2:
             # inline dictionary
-            for i, (key, value) in enumerate(data.items()):
+            for i, (key, value) in enumerate(value.items()):
                 if i > 0:
                     self._buffer.append(", ")
                 self._write_key(key)
@@ -301,7 +343,7 @@ class StefWriter:
         else:
             # bracketed dictionary
             self._buffer.append("{")
-            for i, (key, value) in enumerate(data.items()):
+            for i, (key, value) in enumerate(value.items()):
                 if i > 0:
                     self._buffer.append(", ")
                 self._write_key(key)
@@ -309,6 +351,10 @@ class StefWriter:
                 self._write_value(value)
             self._buffer.append("}")
         self._stack.pop()
+
+
+def is_reserved(word):
+    return str(word).lower() in {"null", "true", "false", "infinity", "nan"}
 
 
 def dumps(value):

@@ -106,7 +106,7 @@ Parsers must ignore underscores in digit sequences.
 
 Emitters should generally prefer to output the simplest form of a number
 where multiple options are available. Therefore, `1.0` is preferred to `+1.0`
-or `1.0e0`. However, implementations may choose to output any valid form.
+or `1e0`. However, implementations may choose to output any valid form.
 Parsers should gracefully accept any valid form.
 
 ```
@@ -124,7 +124,7 @@ hex-digit-seq   := hex-digit (hex-digit | "_")*
 integer         := dec-integer | hex-integer
 dec-integer     := digit-seq
 hex-integer     := "0x" hex-digit-seq
-float           := integer fraction exponent?
+float           := digit-seq (fraction | exponent | fraction exponent)
 fraction        := "." digit-seq
 exponent        := "e"/i sign? digit-seq
 
@@ -135,10 +135,13 @@ infinity        := "infinity"/i
 
 Temporal values include dates, times, timestamps and durations. ISO 8601
 formatting is used to represent date, time, and timestamp values according to
-the Gregorian calendar and the 24-hour clock. Duration values chain together
-a count of days, hours, minutes and seconds. Such counts must be listed in
-order and must be contiguous. Parsers should reject duration values with
-non-contiguous components.
+the Gregorian calendar and the 24-hour clock.
+
+Duration values chain together a count of days, hours, minutes and seconds.
+Such counts must be listed in order and must be contiguous. Parsers should
+reject duration values with non-contiguous components. Emitters may output
+zero durations using any one or more components with a zero value, and in a
+valid sequence.
 
 ```
 temporal        := date | time | timestamp | duration
