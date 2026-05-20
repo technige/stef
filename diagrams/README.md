@@ -1,15 +1,64 @@
 # Diagrams
 
+## Stream
+
+![Stream](stream.svg)
+
+```
+Diagram(Group(Sequence(
+  ZeroOrMore(Sequence(
+    NonTerminal("Paragraph"),
+    ZeroOrMore(Sequence(NonTerminal("BLANK LINE"), NonTerminal("Paragraph"))),
+  )) 
+), "Stream"))
+```
+
+## Paragraph
+
+![Paragraph](paragraph.svg)
+
+```
+Diagram(Group(Sequence(
+  Choice(0,
+    NonTerminal("Value"),
+    NonTerminal("List (block)"),
+    NonTerminal("Dictionary (block)"),
+  ),
+  NonTerminal("LINE BREAK"),
+), "Paragraph"))
+```
+
+## Value
+
+![Value](value.svg)
+
+```
+Diagram(Group(Sequence(
+  Choice(0,
+    NonTerminal("Null"),
+    NonTerminal("Boolean"),
+    NonTerminal("Integer"),
+    NonTerminal("Float"),
+    NonTerminal("Date"),
+    NonTerminal("Time"),
+    NonTerminal("Timestamp"),
+    NonTerminal("Duration"),
+    NonTerminal("Text"),
+    NonTerminal("Bytes"),
+    NonTerminal("List (bracketed)"),
+    NonTerminal("Dictionary (bracketed)"),
+  ),
+), "Value"))
+```
+
 ## Null
 
 ![Null](null.svg)
 
 ```
-Diagram(
-  Group(
-    "null", "Null"
-  )
-)
+Diagram(Group(Sequence(
+  "null"
+), "Null"))
 ```
 
 ## Boolean
@@ -115,28 +164,27 @@ Diagram(
 ![Time](time.svg)
 
 ```
-Diagram(
-  Group(
-    Stack(
-      Sequence(
+Diagram(Group(Stack(
+  Sequence(NonTerminal("hh"), ":", NonTerminal("mm")),
+  Choice(1,
+    Group(Sequence(
+      ":",
+      NonTerminal("ss"),
+      Optional(Sequence(
+        ".",
+        OneOrMore(NonTerminal("0..9")),
+      )),
+    ), "seconds"),
+  Skip()),
+  Choice(1,
+    Group(Sequence(
+      Choice(1, "Z", Sequence(
+        Choice(0, "+", "-"),
         NonTerminal("hh"), ":", NonTerminal("mm"),
-        Choice(0, Sequence(":", NonTerminal("ss")), Skip()),
-      ),
-      Choice(
-        1,
-        Group(
-          Sequence(
-            Choice(1, "Z", Sequence(
-              Choice(0, "+", "-"),
-              NonTerminal("hh"), ":", NonTerminal("mm"),
-            )),
-          ), "time zone"
-        ),
-        Skip(),
-      ),
-    ), "Time"
-  )
-)
+      )),
+    ), "time zone"),
+  Skip()),
+), "Time"))
 ```
 
 ## Timestamp
@@ -144,37 +192,9 @@ Diagram(
 ![Timestamp](timestamp.svg)
 
 ```
-Diagram(
-  Group(
-    Stack(
-      Sequence(
-        Group(Sequence(
-          NonTerminal("YYYY"), "-", NonTerminal("MM"), "-", NonTerminal("DD")
-        ), "date"), "T"
-      ),
-      Group(
-        Stack(
-          Sequence(
-            NonTerminal("hh"), ":", NonTerminal("mm"),
-            Choice(0, Sequence(":", NonTerminal("ss")), Skip()),
-          ),
-          Choice(
-            1,
-            Group(
-              Sequence(
-                Choice(1, "Z", Sequence(
-                  Choice(0, "+", "-"),
-                  NonTerminal("hh"), ":", NonTerminal("mm"),
-                )),
-              ), "time zone"
-            ),
-            Skip(),
-          ),
-        ), "time"
-      )
-    ), "Timestamp"
-  )
-)
+Diagram(Group(Sequence(
+  NonTerminal("Date"), "T", NonTerminal("Time")
+), "Timestamp"))
 ```
 
 ## Duration
@@ -246,16 +266,10 @@ Diagram(
 Diagram(Group(Sequence(
   "\"",
   ZeroOrMore(
-    Choice(0,
+    Choice(1,
+      NonTerminal("any of \\\" \\\\ \\b \\f \\n \\r \\t"),
       NonTerminal("ASCII 32..126 except \" or \\"),
-      NonTerminal("U+0080..U+10FFFF"),
-      Sequence("\\\"", Comment("      DOUBLE QUOTE")),
-      Sequence("\\\\", Comment("         BACKSLASH")),
-      Sequence("\\b", Comment("         BACKSPACE")),
-      Sequence("\\f", Comment("         FORM FEED")),
-      Sequence("\\n", Comment("         LINE FEED")),
-      Sequence("\\r", Comment("   CARRIAGE RETURN")),
-      Sequence("\\t", Comment("    HORIZONTAL TAB")),
+      NonTerminal("  Unicode U+0080..U+10FFFF "),
       Sequence("\\uXXXX", Comment("       U+XXXX")),
       Sequence("\\u{XXXXXX}", Comment("U+XXXXXX")),
       Sequence("\\xXX", Comment("   ASCII char XX")),
@@ -271,18 +285,12 @@ Diagram(Group(Sequence(
 Diagram(Group(Sequence(
   "\"\"\"",
   ZeroOrMore(
-    Choice(2,
+    Choice(3,
       Sequence("\"", Comment("    (except at end)")),
       Sequence("\"\"", Comment("   (except at end)")),
+      NonTerminal("any of \\\" \\\\ \\b \\f \\n \\r \\t"),
       NonTerminal("ASCII 32..126 except \" or \\"),
-      NonTerminal("U+0080..U+10FFFF"),
-      Sequence("\\\"", Comment("      DOUBLE QUOTE")),
-      Sequence("\\\\", Comment("         BACKSLASH")),
-      Sequence("\\b", Comment("         BACKSPACE")),
-      Sequence("\\f", Comment("         FORM FEED")),
-      Sequence("\\n", Comment("         LINE FEED")),
-      Sequence("\\r", Comment("   CARRIAGE RETURN")),
-      Sequence("\\t", Comment("    HORIZONTAL TAB")),
+      NonTerminal("  Unicode U+0080..U+10FFFF "),
       Sequence("\\uXXXX", Comment("       U+XXXX")),
       Sequence("\\u{XXXXXX}", Comment("U+XXXXXX")),
       Sequence("\\xXX", Comment("   ASCII char XX")),
@@ -303,12 +311,8 @@ Diagram(Group(Sequence(
   ZeroOrMore(
     Choice(0,
       Sequence(NonTerminal("0..F"), NonTerminal("0..F")),
-      NonTerminal("any of # $ % & - . : [ ]"),
-      Sequence("0x"),
-      Sequence("U+"),
-      Sequence("\\x"),
-      Sequence("x"),
-      NonTerminal("SP or HT"),
+      NonTerminal("any of # $ % & - . : [ ] 0x U+ \\x x"),
+      NonTerminal("SPACE (U+0020) or TAB (U+0009)"),
     ),
   ),
   "'",
@@ -323,12 +327,8 @@ Diagram(Group(Sequence(
   ZeroOrMore(
     Choice(0,
       Sequence(NonTerminal("0..F"), NonTerminal("0..F")),
-      NonTerminal("any of # $ % & - . : [ ]"),
-      Sequence("0x"),
-      Sequence("U+"),
-      Sequence("\\x"),
-      Sequence("x"),
-      NonTerminal("SP or HT"),
+      NonTerminal("any of # $ % & - . : [ ] 0x U+ \\x x"),
+      NonTerminal("SPACE (U+0020) or TAB (U+0009)"),
       NonTerminal("LINE BREAK"),
     ),
   ),

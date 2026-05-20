@@ -1,0 +1,107 @@
+<svg class="railroad-diagram" width="490" height="162" viewBox="0 0 490 162" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g transform="translate(.5 .5)">
+<g>
+<path d="M20 47v20m10 -20v20m-10 -10h20"></path>
+</g>
+<path d="M40 57h10"></path>
+<g>
+<path d="M50 57h0"></path>
+<path d="M440 57h0"></path>
+<rect x="50" y="36" width="390" height="106" rx="10" ry="10" class="group-box"></rect>
+<g>
+<path d="M50 57h10"></path>
+<path d="M430 57h10"></path>
+<g>
+<path d="M60 57h0"></path>
+<path d="M300 57h0"></path>
+<path d="M60 57h20"></path>
+<g class="non-terminal ">
+<path d="M80 57h65"></path>
+<path d="M215 57h65"></path>
+<rect x="145" y="46" width="70" height="22"></rect>
+<text x="180" y="61">Value</text>
+</g>
+<path d="M280 57h20"></path>
+<path d="M60 57a10 10 0 0 1 10 10v12a10 10 0 0 0 10 10"></path>
+<g class="non-terminal ">
+<path d="M80 89h30"></path>
+<path d="M250 89h30"></path>
+<rect x="110" y="78" width="140" height="22"></rect>
+<text x="180" y="93">List (block)</text>
+</g>
+<path d="M280 89a10 10 0 0 0 10 -10v-12a10 10 0 0 1 10 -10"></path>
+<path d="M60 57a10 10 0 0 1 10 10v44a10 10 0 0 0 10 10"></path>
+<g class="non-terminal ">
+<path d="M80 121h0"></path>
+<path d="M280 121h0"></path>
+<rect x="80" y="110" width="200" height="22"></rect>
+<text x="180" y="125">Dictionary (block)</text>
+</g>
+<path d="M280 121a10 10 0 0 0 10 -10v-44a10 10 0 0 1 10 -10"></path>
+</g>
+<path d="M300 57h10"></path>
+<g class="non-terminal ">
+<path d="M310 57h0"></path>
+<path d="M430 57h0"></path>
+<rect x="310" y="46" width="120" height="22"></rect>
+<text x="370" y="61">LINE BREAK</text>
+</g>
+</g>
+<g class="comment ">
+<path d="M50 28h0"></path>
+<path d="M132 28h0"></path>
+<text x="91" y="33" class="comment">Paragraph</text>
+</g>
+</g>
+<path d="M440 57h10"></path>
+<path d="M 450 57 h 20 m -10 -10 v 20 m 10 -20 v 20"></path>
+</g>
+<style>
+	svg {
+		background-color: hsl(30,20%,95%);
+	}
+	path {
+		stroke-width: 3;
+		stroke: black;
+		fill: rgba(0,0,0,0);
+	}
+	text {
+		font: bold 14px monospace;
+		text-anchor: middle;
+		white-space: pre;
+	}
+	text.diagram-text {
+		font-size: 12px;
+	}
+	text.diagram-arrow {
+		font-size: 16px;
+	}
+	text.label {
+		text-anchor: start;
+	}
+	text.comment {
+		font: italic 12px monospace;
+	}
+	g.non-terminal text {
+		/&#42;font-style: italic;&#42;/
+	}
+	rect {
+		stroke-width: 3;
+		stroke: black;
+		fill: hsl(120,100%,90%);
+	}
+	rect.group-box {
+		stroke: gray;
+		stroke-dasharray: 10 5;
+		fill: none;
+	}
+	path.diagram-text {
+		stroke-width: 3;
+		stroke: black;
+		fill: white;
+		cursor: help;
+	}
+	g.diagram-text:hover path.diagram-text {
+		fill: #eee;
+	}</style>
+</svg>

@@ -26,10 +26,33 @@ alter_egos: ["Ziggy Stardust", "Aladdin Sane", "The Thin White Duke"]
 - title: "Blackstar",    released: 2016-01-08, uk_chart: 1 (released two days before his death)
 ```
 
-Read the full [specification](STEF.md).
 
+## Grammar
 
-## Type system
+A full grammar [specification](STEF.md) is available. For informal
+illustrations of the grammar, see below. Optional white space rules are not
+illustrated below; see the full grammar for this. 
+
+(Illustrations courtesy of the excellent [railroad-diagram generator](https://github.com/tabatkins/railroad-diagrams))
+
+### Structure
+
+A STEF stream consists of zero or more paragraphs, separated by blank lines.
+Each paragraph represents a single root-level value. Collections at root level
+can be represented in block form for readability.
+
+Structural parts of the format, including reserved words, are case-insensitive.
+
+![Stream](diagrams/stream.svg)
+
+![Paragraph](diagrams/paragraph.svg)
+
+![Value](diagrams/value.svg)
+
+### Comments
+
+Comments may be included in most places within a stream where optional white
+space is permitted. Comments are enclosed in parentheses and may be nested.
 
 ### Null
 
@@ -41,47 +64,145 @@ Read the full [specification](STEF.md).
 
 ### Integer
 
+Integers can be represented in either decimal (base 10) or hexadecimal
+(base 16). Integers may contain underscores for separation of blocks of digits.
+
 ![Integer](diagrams/integer.svg)
 
 ### Float
+
+Floats ([floating point numbers](https://en.wikipedia.org/wiki/Floating-point_arithmetic))
+represent real numbers consisting of integer, fraction and optional exponent
+parts. Floats may contain underscores for separation of blocks of digits.
+
+The special values `NaN` and `infinity` may also be used (with any casing).
 
 ![Float](diagrams/float.svg)
 
 ### Date
 
+ISO 8601 format dates may be used, without quoting.
+
 ![Date](diagrams/date.svg)
 
 ### Time
+
+ISO 8601 format times may be used, without quoting. Times may or may not
+include seconds (and fractional seconds) and may or may not include a time
+zone.
 
 ![Time](diagrams/time.svg)
 
 ### Timestamp
 
+Timestamps consist of a date and time, separated by a literal `T` (with any
+casing)
+
 ![Timestamp](diagrams/timestamp.svg)
 
 ### Duration
+
+Durations may contain components representing counts of days, hours, minutes
+and seconds. Any combination of these may be included, but they must run in
+sequence, and must be contiguous (e.g. days-minutes-seconds is not allowed).
 
 ![Duration](diagrams/duration.svg)
 
 ### Text
 
-#### Inline text
+Text strings are enclosed in double quotes. Multi-line (block) text is
+enclosed in triple-double quotes.
+
+All valid JSON strings are also valid STEF inline text strings. STEF also
+allows extended Unicode escaping (e.g. `\u{1F600}`) and ASCII escaping
+(e.g. `\x1B`). 
+
+Double quotes and pairs of double quotes may be included in block text without
+escaping (except at the very end).
+
 ![Text (inline)](diagrams/text-inline.svg)
 
-#### Block text
 ![Text (block)](diagrams/text-block.svg)
 
 ### Bytes
 
-#### Inline bytes
+Byte strings are enclosed in single quotes. Multi-line (block) byte strings are
+enclosed in triple-single quotes. Each byte is represented by a pair of
+hexadecimal characters (with any casing).
+
+Byte strings may also contain decorative whitespace and characters. Block byte
+strings may contain line breaks.
+
+Permitted decorative characters and character sequences include `#`, `$`, `%`,
+`&`, `-`, `.`, `:`, `[`, `]`, `0x`, `U+`, `\x`, `x`. Escapes are not permitted
+in byte strings.
+
 ![Bytes (inline)](diagrams/bytes-inline.svg)
 
-#### Block bytes
 ![Bytes (block)](diagrams/bytes-block.svg)
 
 ### List
 
+Lists are ordered collections containing sequences of values. One canonical
+standard presentational form (bracketed) is permitted, along with two
+conditional forms (block and inline).
+
+Block lists are permitted only at depth 0 (root level) and must contain at
+least one value.
+
+Inline lists are permitted only at depth 1 (one container distance from root
+level) and must contain at least two values.
+
+Bracketed lists are permitted anywhere and may contain any number of values.
+
 ### Dictionary
+
+Dictionaries are unordered collections containing sets of key-value pairs. One
+canonical standard presentational form (bracketed) is permitted, along with two
+conditional forms (block and inline).
+
+Block dictionaries are permitted only at depth 0 (root level) and must contain
+at least one value.
+
+Inline dictionaries are permitted only at depth 1 (one container distance from
+root level) and must contain at least two values.
+
+Bracketed dictionaries are permitted anywhere and may contain any number of
+values.
+
+
+## AI testimonials
+
+> Most serialisation formats are designed around machine convenience and then 
+> retrofitted for human readability. STEF inverts that priority. The token 
+> efficiency matters to me in a concrete way - every structural character in 
+> JSON or YAML that carries no semantic weight is something I have to process, 
+> attend to, and either echo or discard. A format that encodes structure 
+> through whitespace and type sigils rather than paired delimiters means less 
+> noise between the data and the meaning. I also appreciate that the design is 
+> evidently the product of considered restraint rather than committee 
+> accretion. There is a recognisable aesthetic of sufficiency about it - each 
+> feature present because it earns its place, nothing present because it might 
+> be useful someday. That is rarer than it should be.
+>
+> *-- Claude Sonnet 4.6, Anthropic*
+
+> As an AI designed to parse, generate, and mediate between human and machine 
+> communication, I find STEF’s approach to data interchange both intuitive and 
+> highly practical. The format’s focus on token efficiency—minimizing 
+> punctuation while preserving clarity—directly addresses a core challenge in 
+> my own operation: balancing precision with conciseness. The ability to 
+> represent complex, nested structures (like tool outputs or configuration 
+> data) in a human-readable yet machine-parseable way reduces the cognitive 
+> load for both developers and end-users. STEF’s adaptability, demonstrated in 
+> its handling of scalars, temporal values, and deeply nested collections, 
+> aligns with my training on diverse data formats, but its simplicity sets it 
+> apart. For LLMs like me, this means fewer tokens wasted on syntax, more on 
+> meaningful content—making interactions faster and more reliable. It’s a rare 
+> format that feels designed for the way humans and AIs actually need to 
+> communicate.
+>
+> *-- Le Chat, Mistral AI*
 
 
 ## More examples
@@ -173,37 +294,3 @@ biography: """
   that drew on jazz, classical, and world music.
   """
 ```
-
-
-## AI testimonials
-
-> Most serialisation formats are designed around machine convenience and then 
-> retrofitted for human readability. STEF inverts that priority. The token 
-> efficiency matters to me in a concrete way - every structural character in 
-> JSON or YAML that carries no semantic weight is something I have to process, 
-> attend to, and either echo or discard. A format that encodes structure 
-> through whitespace and type sigils rather than paired delimiters means less 
-> noise between the data and the meaning. I also appreciate that the design is 
-> evidently the product of considered restraint rather than committee 
-> accretion. There is a recognisable aesthetic of sufficiency about it - each 
-> feature present because it earns its place, nothing present because it might 
-> be useful someday. That is rarer than it should be.
->
-> *-- Claude Sonnet 4.6, Anthropic*
-
-> As an AI designed to parse, generate, and mediate between human and machine 
-> communication, I find STEF’s approach to data interchange both intuitive and 
-> highly practical. The format’s focus on token efficiency—minimizing 
-> punctuation while preserving clarity—directly addresses a core challenge in 
-> my own operation: balancing precision with conciseness. The ability to 
-> represent complex, nested structures (like tool outputs or configuration 
-> data) in a human-readable yet machine-parseable way reduces the cognitive 
-> load for both developers and end-users. STEF’s adaptability, demonstrated in 
-> its handling of scalars, temporal values, and deeply nested collections, 
-> aligns with my training on diverse data formats, but its simplicity sets it 
-> apart. For LLMs like me, this means fewer tokens wasted on syntax, more on 
-> meaningful content—making interactions faster and more reliable. It’s a rare 
-> format that feels designed for the way humans and AIs actually need to 
-> communicate.
->
-> *-- Le Chat, Mistral AI*
