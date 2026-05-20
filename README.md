@@ -54,6 +54,8 @@ Structural parts of the format, including reserved words, are case-insensitive.
 Comments may be included in most places within a stream where optional white
 space is permitted. Comments are enclosed in parentheses and may be nested.
 
+![Comment](diagrams/comment.svg)
+
 ### Null
 
 ![Null](diagrams/null.svg)

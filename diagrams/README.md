@@ -51,6 +51,21 @@ Diagram(Group(Sequence(
 ), "Value"))
 ```
 
+## Comment
+
+![Comment](comment.svg)
+
+```
+Diagram(Group(Sequence(
+  "(",
+  OneOrMore(Choice(1, 
+    NonTerminal("Comment"),
+    NonTerminal("COMMENT TEXT"),
+  )),
+  ")",
+), "Comment"))
+```
+
 ## Null
 
 ![Null](null.svg)
