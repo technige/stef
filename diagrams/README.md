@@ -278,19 +278,27 @@ Diagram(
 ![Text (inline)](text-inline.svg)
 
 ```
-Diagram(Group(Sequence(
-  "\"",
-  ZeroOrMore(
-    Choice(1,
-      NonTerminal("any of \\\" \\\\ \\b \\f \\n \\r \\t"),
-      NonTerminal("ASCII 32..126 except \" or \\"),
-      NonTerminal("  Unicode U+0080..U+10FFFF "),
-      Sequence("\\uXXXX", Comment("       U+XXXX")),
-      Sequence("\\u{XXXXXX}", Comment("U+XXXXXX")),
-      Sequence("\\xXX", Comment("   ASCII char XX")),
+Diagram(Group(Stack(
+  Choice(1,
+    Sequence(
+      NonTerminal("IDENTIFIER"),
+      Comment("see Unicode TR #31"),
     ),
-  ),
-  "\"",
+    Sequence(
+      "\"",
+      ZeroOrMore(
+        Choice(1,
+          NonTerminal("any of  \\\" \\\\ \\b \\f \\n \\r \\t"),
+          NonTerminal("ASCII 32..126  except \" or \\"),
+          NonTerminal("  Unicode U+0080..U+10FFFF  "),
+          Sequence("\\uXXXX", Comment("       U+XXXX")),
+          Sequence("\\u{XXXXXX}", Comment("U+XXXXXX")),
+          Sequence("\\xXX", Comment("   ASCII char XX")),
+        ),
+      ),
+      "\"",
+    )
+  )
 ), "Text (inline)"))
 ```
 

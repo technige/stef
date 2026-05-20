@@ -112,8 +112,10 @@ sequence, and must be contiguous (e.g. days-minutes-seconds is not allowed).
 
 ### Text
 
-Text strings are enclosed in double quotes. Multi-line (block) text is
-enclosed in triple-double quotes.
+Text strings are generally enclosed in double quotes. Simple text strings that
+match the [Unicode identifier](https://www.unicode.org/reports/tr31/) pattern
+may be used unquoted. Multi-line (block) text is enclosed in triple-double
+quotes.
 
 All valid JSON strings are also valid STEF inline text strings. STEF also
 allows extended Unicode escaping (e.g. `\u{1F600}`) and ASCII escaping
