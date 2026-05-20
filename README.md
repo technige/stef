@@ -154,6 +154,13 @@ Inline lists are permitted only at depth 1 (one container distance from root
 level) and must contain at least two values.
 
 Bracketed lists are permitted anywhere and may contain any number of values.
+Bracketed lists may contain trailing commas.
+
+![List (bracketed)](diagrams/list-bracketed.svg)
+
+![List (inline)](diagrams/list-inline.svg)
+
+![List (block)](diagrams/list-block.svg)
 
 ### Dictionary
 
@@ -168,7 +175,13 @@ Inline dictionaries are permitted only at depth 1 (one container distance from
 root level) and must contain at least two values.
 
 Bracketed dictionaries are permitted anywhere and may contain any number of
-values.
+values. Bracketed dictionaries may contain trailing commas.
+
+![Dictionary (bracketed)](diagrams/dictionary-bracketed.svg)
+
+![Dictionary (inline)](diagrams/dictionary-inline.svg)
+
+![Dictionary (block)](diagrams/dictionary-block.svg)
 
 
 ## AI testimonials

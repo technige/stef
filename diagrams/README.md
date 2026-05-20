@@ -338,4 +338,115 @@ Diagram(Group(Sequence(
 
 ## List
 
+![List (bracketed)](list-bracketed.svg)
+
+```
+Diagram(Group(Sequence(
+  "[",
+  ZeroOrMore(Sequence(
+    NonTerminal("Value"),
+    ZeroOrMore(Sequence(",", NonTerminal("Value"))),
+    Choice(0, Skip(), ","),
+  )) ,
+  "]",
+), "List (bracketed)"))
+```
+
+![List (inline)](list-inline.svg)
+
+```
+Diagram(Group(Sequence(
+  ZeroOrMore(Sequence(
+    NonTerminal("Value"), ",", NonTerminal("Value"),
+    ZeroOrMore(Sequence(",", NonTerminal("Value"))),
+  )) ,
+), "List (inline)"))
+```
+
+![List (block)](list-block.svg)
+
+```
+Diagram(Group(Stack(
+  Sequence(
+    "-", NonTerminal("SPACE"),
+    Choice(0,
+      NonTerminal("Value"),
+      NonTerminal("List (inline)"),
+      NonTerminal("Dictionary (inline)"),
+    )
+  ),
+  Choice(0, Skip(), OneOrMore(Sequence(
+    NonTerminal("LINE BREAK"),
+    Sequence(
+      "-", NonTerminal("SPACE"),
+      Choice(0,
+        NonTerminal("Value"),
+        NonTerminal("List (inline)"),
+        NonTerminal("Dictionary (inline)"),
+      )
+    ),
+  ))),
+), "List (block)"))
+```
+
 ## Dictionary
+
+![Dictionary (bracketed)](dictionary-bracketed.svg)
+
+```
+Diagram(Group(Sequence(
+  "{",
+  Stack(
+    Sequence(Group(NonTerminal("Text"), "key"), ":", NonTerminal("Value")),
+    Choice(0, Skip(), Stack(
+      OneOrMore(Sequence(
+        ",",
+        Sequence(Group(NonTerminal("Text"), "key"), ":", NonTerminal("Value"))
+      )),
+    )),
+  ),
+  Choice(0, Skip(), ","),
+  "}",
+), "Dictionary (bracketed)"))
+```
+
+![Dictionary (inline)](dictionary-inline.svg)
+
+```
+Diagram(Group(Sequence(
+  ZeroOrMore(Stack(
+    Sequence(Group(NonTerminal("Text"), "key"), ":", NonTerminal("Value")),
+    Sequence(",", Group(NonTerminal("Text"), "key"), ":", NonTerminal("Value")),
+    Choice(0, Skip(), Sequence(
+      ",",
+      Sequence(Group(NonTerminal("Text"), "key"), ":", NonTerminal("Value"))
+    )),
+  )) ,
+), "Dictionary (inline)"))
+```
+
+![Dictionary (block)](dictionary-block.svg)
+
+```
+Diagram(Group(Stack(
+  Sequence(
+    Group(NonTerminal("Text"), "key"), ":", 
+    Choice(0,
+      NonTerminal("Value"),
+      NonTerminal("List (inline)"),
+      NonTerminal("Dictionary (inline)"),
+    )
+  ),
+  Choice(0, Skip(), OneOrMore(Sequence(
+    NonTerminal("LINE BREAK"),
+    Sequence(
+      Group(NonTerminal("Text"), "key"), ":", 
+      Choice(0,
+        NonTerminal("Value"),
+        NonTerminal("List (inline)"),
+        NonTerminal("Dictionary (inline)"),
+      )
+    ),
+  ))),
+), "Dictionary (block)"))
+```
