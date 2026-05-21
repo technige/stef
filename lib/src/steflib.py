@@ -12,7 +12,7 @@ from re import compile as regex, IGNORECASE
 from sys import stdout
 
 
-__version__ = "0.2.1"
+__version__ = "0.2.2"
 
 
 # TODO: use full Unicode identifier pattern
