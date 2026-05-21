@@ -402,7 +402,7 @@ class StefWriter:
                 self._write_key(key)
                 self._buffer.append(": ")
                 self._write_value(data)
-        elif depth == 1 and size >= 2:
+        elif depth == 1 and size >= 1:
             # inline dictionary
             for i, (key, data) in enumerate(data.items()):
                 if i > 0:

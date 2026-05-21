@@ -223,9 +223,10 @@ Collections are considered to nest when one is placed inside another. Depth
 begins at zero at the stream root, and increases by one for every collection
 descended into. Nesting depth and element count provide conditions that permit
 certain presentational forms. Block forms are only permitted at depth zero when
-at least one element is present. Inline forms are only permitted at depth one
-when at least two elements are present. All other cases, including empty
-collections, require the standard bracketed form. The documented grammar
+at least one element is present. Inline lists are only permitted at depth one
+when at least two elements are present; inline dictionaries are only permitted
+at depth one when at least one element is present. All other cases, including
+empty collections, require the standard bracketed form. The documented grammar
 encodes these depth and content constraints fully.
 
 Emitters should prefer extended presentational representations whenever
@@ -253,7 +254,7 @@ dict-seq        := key-value ~~ (comma ~~ key-value ~~)* comma?
 dict            := "{" dict-seq? ~~ "}"
 
 inline-list     := value -- comma -- value -- (comma -- value --)*
-inline-dict     := key-value -- comma -- key-value -- (comma -- key-value --)*
+inline-dict     := key-value -- (comma -- key-value --)*
 
 inline-value    := value | inline-list | inline-dict
 list-item       := "-" space+ inline-value

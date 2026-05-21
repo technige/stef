@@ -74,12 +74,14 @@ list_tests = [
     ([], "[]"),
     ([1], "- 1"),
     ([1, 2], "- 1\n- 2"),
+    ([{"one": 1}, {"two": 2}], "- one: 1\n- two: 2"),
 ]
 
 
 dictionary_tests = [
     ({}, "{}"),
     ({"one": 1}, "one: 1"),
+    ({"first": {"one": 1}, "second": {"two": 2}}, "first: one: 1\nsecond: two: 2"),
     ({"one": 1, "two": 2}, "one: 1\ntwo: 2"),
     ({1: "one", 2: "two"}, "1: one\n2: two"),
     ({-1: "minus one", -2: "minus two"}, "-1: \"minus one\"\n-2: \"minus two\""),
@@ -94,6 +96,7 @@ dictionary_tests = [
     ({"colours": ["red", "green", "blue"]}, "colours:\n- red\n- green\n- blue"),
     ({"empty": []}, "empty: []"),
     ({"odds": [1, 3, 5], "evens": [2, 4, 6]}, "odds: 1, 3, 5\nevens: 2, 4, 6"),
+    ({"odds": [{"one": 1}, {"three": 3}], "evens": [{"two": 2}, {"four": 4}]}, "odds: {one: 1}, {three: 3}\nevens: {two: 2}, {four: 4}"),
 ]
 
 

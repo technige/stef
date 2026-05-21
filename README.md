@@ -179,7 +179,7 @@ Block dictionaries are permitted only at depth 0 (root level) and must contain
 at least one value.
 
 Inline dictionaries are permitted only at depth 1 (one container distance from
-root level) and must contain at least two values.
+root level) and must contain at least one value.
 
 Bracketed dictionaries are permitted anywhere and may contain any number of
 values. Bracketed dictionaries may contain trailing commas.
