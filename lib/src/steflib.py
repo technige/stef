@@ -404,8 +404,19 @@ def is_reserved(word):
     return str(word).lower() in {"null", "true", "false", "infinity", "nan"}
 
 
-def dumps(value):
+def stef(value):
+    """ Convert a value to a STEF string.
+    """
     out = StringIO()
     writer = StefWriter(out)
     writer.write(value)
     return out.getvalue()
+
+
+def dumps(value):
+    """ Convert a value to a STEF string.
+
+    This function is a compatibility wrapper for Python to implement a
+    familiar interface.
+    """
+    return stef(value)

@@ -1,6 +1,6 @@
 from datetime import date, datetime, timedelta
 
-from steflib import dumps, Boolean, Integer, Float
+from steflib import stef, Boolean, Integer, Float
 
 
 integer_tests = [
@@ -94,40 +94,40 @@ dictionary_tests = [
 def test_integer_dumps(subtests):
     for value, output in integer_tests:
         with subtests.test(f"{value!r} -> {output!r}"):
-            assert dumps(value) == output
+            assert stef(value) == output
 
 
 def test_float_dumps(subtests):
     for value, output in float_tests:
         with subtests.test(f"{value!r} -> {output!r}"):
-            assert dumps(value) == output
+            assert stef(value) == output
 
 
 def test_text_dumps(subtests):
     for value, output in text_tests:
         with subtests.test(f"{value!r} -> {output!r}"):
-            assert dumps(value) == output
+            assert stef(value) == output
 
 
 def test_timestamp_dumps(subtests):
     for value, output in timestamp_tests:
         with subtests.test(f"{value!r} -> {output!r}"):
-            assert dumps(value) == output
+            assert stef(value) == output
 
 
 def test_duration_dumps(subtests):
     for value, output in duration_tests:
         with subtests.test(f"{value!r} -> {output!r}"):
-            assert dumps(value) == output
+            assert stef(value) == output
 
 
 def test_list_dumps(subtests):
     for value, output in list_tests:
         with subtests.test(f"{value!r} -> {output!r}"):
-            assert dumps(value) == output
+            assert stef(value) == output
 
 
 def test_dictionary_dumps(subtests):
     for value, output in dictionary_tests:
         with subtests.test(f"{value!r} -> {output!r}"):
-            assert dumps(value) == output
+            assert stef(value) == output
