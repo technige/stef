@@ -55,7 +55,7 @@ standalone comment between paragraphs does not constitute a new paragraph.
 ```
 stream          := paragraph-seq?
 paragraph-seq   := paragraph (blank-line paragraph)*
-paragraph       := (value | block-list | block-dict) -- line-break
+paragraph       := (value | block-list | block-dict | keyed-list) -- line-break
 blank-line      := ~~ line-break
 value           := null | boolean | numeric | temporal | string | collection
 ```
@@ -217,7 +217,7 @@ block-bytes     := "'''" block-bytes-seq "'''"
 
 
 Two types of collection exist: lists and dictionaries. Each has a standard
-representation, plus two extended presentational representations.
+representation, plus two type-specific extended forms.
 
 Collections are considered to nest when one is placed inside another. Depth
 begins at zero at the stream root, and increases by one for every collection
@@ -232,6 +232,12 @@ Emitters should prefer extended presentational representations whenever
 conditions are met, to maximise legibility of output. Standard forms remain
 valid alternatives as fallbacks however, and parsers should gracefully accept
 content in any form.
+
+One hybrid presentational form is available when a singleton dictionary
+contains a non-empty list as its one and only value. This allows a block list
+to be present at depth one but appear as a depth-zero collection. Emitters
+should prefer this presentational form when a top-level dictionary contains
+only one value, and when that value is a non-empty list.
 
 ```
 collection      := list | dict
@@ -254,6 +260,8 @@ list-item       := "-" space+ inline-value
 dict-item       := key -- ":" -- inline-value
 block-list      := list-item -- (line-break -- list-item --)*
 block-dict      := dict-item -- (line-break -- dict-item --)*
+
+keyed-list      := key -- ":" -- line-break block-list
 ```
 
 ---

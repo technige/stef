@@ -23,6 +23,7 @@ Diagram(Group(Sequence(
     NonTerminal("Value"),
     NonTerminal("List (block)"),
     NonTerminal("Dictionary (block)"),
+    NonTerminal("Keyed List (block)"),
   ),
   NonTerminal("LINE BREAK"),
 ), "Paragraph"))
@@ -457,4 +458,18 @@ Diagram(Group(Stack(
     ),
   ))),
 ), "Dictionary (block)"))
+```
+
+## Hybrid collections
+
+![Keyed List (block)](keyed-list-block.svg)
+
+```
+Diagram(Group(Stack(
+  Sequence(
+    Group(Choice(0, NonTerminal("Text"), NonTerminal("Integer")), "key"), ":", 
+    NonTerminal("LINE BREAK"),
+    NonTerminal("List (block)"),
+  ),
+), "Keyed List (block)"))
 ```

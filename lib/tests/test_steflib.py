@@ -91,6 +91,9 @@ dictionary_tests = [
     ({"0x01": "one", "0x02": "two"}, '"0x01": one\n"0x02": two'),
     ({Integer(1, width=2, as_hex=True): "one", Integer(2, width=2, as_hex=True): "two"}, '0x01: one\n0x02: two'),
     ({date(2012, 3, 4): "date"}, "\"2012-03-04\": date"),
+    ({"colours": ["red", "green", "blue"]}, "colours:\n- red\n- green\n- blue"),
+    ({"empty": []}, "empty: []"),
+    ({"odds": [1, 3, 5], "evens": [2, 4, 6]}, "odds: 1, 3, 5\nevens: 2, 4, 6"),
 ]
 
 

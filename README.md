@@ -190,6 +190,15 @@ values. Bracketed dictionaries may contain trailing commas.
 
 ![Dictionary (block)](diagrams/dictionary-block.svg)
 
+### Hybrid collections
+
+One hybrid presentational form is also available for top-level dictionaries
+that contain a non-empty list as their one and only one value. This is termed
+a "keyed list" in the grammar, and provides a mechanism to essentially label
+a block list with a semantically meaningful header.
+
+![Keyed List (block)](diagrams/keyed-list-block.svg)
+
 
 ## AI testimonials
 

@@ -22,6 +22,9 @@ decimal_integer_pattern = regex(r"^(([+-]?)([0-9]+))$")
 hexadecimal_integer_pattern = regex(r"^(([+-]?)0x([0-9A-F]+))$", IGNORECASE)
 
 
+list_like = (list, tuple, set, frozenset)
+
+
 class _Commented:
     """ Mixin for types that can have a comment attached.
     """
@@ -283,7 +286,7 @@ class StefWriter:
             self._write_text(value)
         elif isinstance(value, (bytes, bytearray)):
             self._write_bytes(value)
-        elif isinstance(value, (list, tuple, set, frozenset)):
+        elif isinstance(value, list_like):
             self._write_list(value)
         elif isinstance(value, dict):
             self._write_dictionary(value)
@@ -355,11 +358,7 @@ class StefWriter:
         self._stack.append("[")
         if depth == 0 and len(value) >= 1:
             # block list
-            for i, value in enumerate(value):
-                if i > 0:
-                    self._buffer.append("\n")
-                self._buffer.append("- ")
-                self._write_value(value)
+            self._write_block_list(value)
         elif depth == 1 and len(value) >= 2:
             # inline list
             for i, value in enumerate(value):
@@ -376,35 +375,50 @@ class StefWriter:
             self._buffer.append("]")
         self._stack.pop()
 
+    def _write_block_list(self, value):
+        for i, value in enumerate(value):
+            if i > 0:
+                self._buffer.append("\n")
+            self._buffer.append("- ")
+            self._write_value(value)
+
     def _write_dictionary(self, value):
-        value = dict(value)
+        data = dict(value)
+        size = len(data)
+        keys = list(data.keys())
+        values = list(data.values())
         depth = len(self._stack)
         self._stack.append("{")
-        if depth == 0 and len(value) >= 1:
+        if depth == 0 and size == 1 and isinstance(values[0], list_like) and len(values[0]) >= 1:
+            # keyed block list
+            self._write_key(keys[0])
+            self._buffer.append(":\n")
+            self._write_block_list(values[0])
+        elif depth == 0 and size >= 1:
             # block dictionary
-            for i, (key, value) in enumerate(value.items()):
+            for i, (key, data) in enumerate(data.items()):
                 if i > 0:
                     self._buffer.append("\n")
                 self._write_key(key)
                 self._buffer.append(": ")
-                self._write_value(value)
-        elif depth == 1 and len(value) >= 2:
+                self._write_value(data)
+        elif depth == 1 and size >= 2:
             # inline dictionary
-            for i, (key, value) in enumerate(value.items()):
+            for i, (key, data) in enumerate(data.items()):
                 if i > 0:
                     self._buffer.append(", ")
                 self._write_key(key)
                 self._buffer.append(": ")
-                self._write_value(value)
+                self._write_value(data)
         else:
             # bracketed dictionary
             self._buffer.append("{")
-            for i, (key, value) in enumerate(value.items()):
+            for i, (key, data) in enumerate(data.items()):
                 if i > 0:
                     self._buffer.append(", ")
                 self._write_key(key)
                 self._buffer.append(": ")
-                self._write_value(value)
+                self._write_value(data)
             self._buffer.append("}")
         self._stack.pop()
 

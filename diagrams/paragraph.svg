@@ -1,4 +1,4 @@
-<svg class="railroad-diagram" width="490" height="162" viewBox="0 0 490 162" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg class="railroad-diagram" width="490" height="194" viewBox="0 0 490 194" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g transform="translate(.5 .5)">
 <g>
 <path d="M20 47v20m10 -20v20m-10 -10h20"></path>
@@ -7,7 +7,7 @@
 <g>
 <path d="M50 57h0"></path>
 <path d="M440 57h0"></path>
-<rect x="50" y="36" width="390" height="106" rx="10" ry="10" class="group-box"></rect>
+<rect x="50" y="36" width="390" height="138" rx="10" ry="10" class="group-box"></rect>
 <g>
 <path d="M50 57h10"></path>
 <path d="M430 57h10"></path>
@@ -38,6 +38,14 @@
 <text x="180" y="125">Dictionary (block)</text>
 </g>
 <path d="M280 121a10 10 0 0 0 10 -10v-44a10 10 0 0 1 10 -10"></path>
+<path d="M60 57a10 10 0 0 1 10 10v76a10 10 0 0 0 10 10"></path>
+<g class="non-terminal ">
+<path d="M80 153h0"></path>
+<path d="M280 153h0"></path>
+<rect x="80" y="142" width="200" height="22"></rect>
+<text x="180" y="157">Keyed List (block)</text>
+</g>
+<path d="M280 153a10 10 0 0 0 10 -10v-76a10 10 0 0 1 10 -10"></path>
 </g>
 <path d="M300 57h10"></path>
 <g class="non-terminal ">
