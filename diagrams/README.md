@@ -405,11 +405,11 @@ Diagram(Group(Stack(
 Diagram(Group(Sequence(
   "{",
   Stack(
-    Sequence(Group(NonTerminal("Text"), "key"), ":", NonTerminal("Value")),
+    Sequence(Group(Choice(0, NonTerminal("Text"), NonTerminal("Integer")), "key"), ":", NonTerminal("Value")),
     Choice(0, Skip(), Stack(
       OneOrMore(Sequence(
         ",",
-        Sequence(Group(NonTerminal("Text"), "key"), ":", NonTerminal("Value"))
+        Sequence(Group(Choice(0, NonTerminal("Text"), NonTerminal("Integer")), "key"), ":", NonTerminal("Value"))
       )),
     )),
   ),
@@ -423,11 +423,11 @@ Diagram(Group(Sequence(
 ```
 Diagram(Group(Sequence(
   ZeroOrMore(Stack(
-    Sequence(Group(NonTerminal("Text"), "key"), ":", NonTerminal("Value")),
-    Sequence(",", Group(NonTerminal("Text"), "key"), ":", NonTerminal("Value")),
+    Sequence(Group(Choice(0, NonTerminal("Text"), NonTerminal("Integer")), "key"), ":", NonTerminal("Value")),
+    Sequence(",", Group(Choice(0, NonTerminal("Text"), NonTerminal("Integer")), "key"), ":", NonTerminal("Value")),
     Choice(0, Skip(), Sequence(
       ",",
-      Sequence(Group(NonTerminal("Text"), "key"), ":", NonTerminal("Value"))
+      Sequence(Group(Choice(0, NonTerminal("Text"), NonTerminal("Integer")), "key"), ":", NonTerminal("Value"))
     )),
   )) ,
 ), "Dictionary (inline)"))
@@ -438,7 +438,7 @@ Diagram(Group(Sequence(
 ```
 Diagram(Group(Stack(
   Sequence(
-    Group(NonTerminal("Text"), "key"), ":", 
+    Group(Choice(0, NonTerminal("Text"), NonTerminal("Integer")), "key"), ":", 
     Choice(0,
       NonTerminal("Value"),
       NonTerminal("List (inline)"),
@@ -448,7 +448,7 @@ Diagram(Group(Stack(
   Choice(0, Skip(), OneOrMore(Sequence(
     NonTerminal("LINE BREAK"),
     Sequence(
-      Group(NonTerminal("Text"), "key"), ":", 
+      Group(Choice(0, NonTerminal("Text"), NonTerminal("Integer")), "key"), ":", 
       Choice(0,
         NonTerminal("Value"),
         NonTerminal("List (inline)"),

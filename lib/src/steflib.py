@@ -8,7 +8,7 @@ from datetime import date, time, datetime, timedelta
 from io import StringIO
 from json import dumps as json_dumps
 from math import isnan, isinf
-from re import compile as regex
+from re import compile as regex, IGNORECASE
 from sys import stdout
 
 
@@ -16,7 +16,10 @@ __version__ = "0.1.0"
 
 
 # TODO: use full Unicode identifier pattern
-identifier = regex(r"^[a-z_][a-z0-9_]*$")
+identifier_pattern = regex(r"^[a-z_][a-z0-9_]*$", IGNORECASE)
+
+decimal_integer_pattern = regex(r"^(([+-]?)([0-9]+))$")
+hexadecimal_integer_pattern = regex(r"^(([+-]?)0x([0-9A-F]+))$", IGNORECASE)
 
 
 class _Commented:
@@ -56,14 +59,23 @@ class Integer(_Commented, int):
             obj = super().__new__(cls, value, base=base)
         else:
             obj = super().__new__(cls, value)
-        obj._as_hex = as_hex
         obj._width = width
         obj._signed = bool(signed)
+        obj._as_hex = as_hex
         obj.__comment__ = comment
         return obj
 
     def __repr__(self):
-        return f"{self.__class__.__name__}({int(self)})"
+        parts = [str(self)]
+        if self._width:
+            parts.append(f"width={self._width!r}")
+        if self._signed:
+            parts.append(f"signed={self._signed!r}")
+        if self._as_hex:
+            parts.append(f"as_hex={self._as_hex!r}")
+        if self.__comment__:
+            parts.append(f"comment={self.__comment__!r}")
+        return f"{self.__class__.__name__}({', '.join(parts)})"
 
     def __str__(self):
         return self.to_str(as_hex=self._as_hex)
@@ -214,7 +226,27 @@ class StefWriter:
             self._buffer.append(")")
 
     def _write_key(self, key):
-        self._write_text(key)
+        """ Write a dictionary key.
+
+        Keys can be either text strings or integers. If the supplied key is
+        not of either of these types, the key is first converted to a string,
+        and then a pattern match is carried out.
+        """
+        if isinstance(key, str):
+            self._write_text(key)
+        elif isinstance(key, (bool, Boolean)):
+            # Coerce to integer so that True/False map to 1/0
+            self._write_integer(int(key))
+        elif isinstance(key, int):
+            self._write_integer(key)
+        else:
+            str_key = str(key)
+            if decimal_integer_pattern.match(str_key):
+                self._write_integer(Integer(str_key, base=10))
+            elif hexadecimal_integer_pattern.match(str_key):
+                self._write_integer(Integer(str_key, base=16, as_hex=True))
+            else:
+                self._write_text(str_key)
         self._write_comment(getattr(key, "__comment__", None), prefix=" ")
 
     def _write_value(self, value):
@@ -298,7 +330,7 @@ class StefWriter:
 
     def _write_text(self, value):
         value = str(value)
-        if identifier.match(value) and not is_reserved(value):
+        if identifier_pattern.match(value) and not is_reserved(value):
             self._buffer.append(value)
         else:
             self._buffer.append(json_dumps(value))

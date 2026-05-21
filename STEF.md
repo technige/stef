@@ -241,7 +241,7 @@ comma           := ","
 list-seq        := value ~~ (comma ~~ value ~~)* comma?
 list            := "[" list-seq? ~~ "]"
 
-key             := IDENTIFIER | text
+key             := IDENTIFIER | text | (sign? integer)
 key-value       := key ~~ ":" ~~ value
 dict-seq        := key-value ~~ (comma ~~ key-value ~~)* comma?
 dict            := "{" dict-seq? ~~ "}"

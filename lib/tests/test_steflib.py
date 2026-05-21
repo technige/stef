@@ -1,6 +1,6 @@
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 
-from steflib import dumps, Integer, Float
+from steflib import dumps, Boolean, Integer, Float
 
 
 integer_tests = [
@@ -78,6 +78,16 @@ dictionary_tests = [
     ({}, "{}"),
     ({"one": 1}, "one: 1"),
     ({"one": 1, "two": 2}, "one: 1\ntwo: 2"),
+    ({1: "one", 2: "two"}, "1: one\n2: two"),
+    ({-1: "minus one", -2: "minus two"}, "-1: \"minus one\"\n-2: \"minus two\""),
+    ({1: "one", 0: "zero", -1: "minus one"}, "1: one\n0: zero\n-1: \"minus one\""),
+    ({True: "true", False: "false"}, "1: \"true\"\n0: \"false\""),
+    ({Boolean(True): "true", Boolean(False): "false"}, "1: \"true\"\n0: \"false\""),
+    ({"1": "one", "2": "two"}, '"1": one\n"2": two'),
+    ({0x01: "one", 0x02: "two"}, '1: one\n2: two'),
+    ({"0x01": "one", "0x02": "two"}, '"0x01": one\n"0x02": two'),
+    ({Integer(1, width=2, as_hex=True): "one", Integer(2, width=2, as_hex=True): "two"}, '0x01: one\n0x02: two'),
+    ({date(2012, 3, 4): "date"}, "\"2012-03-04\": date"),
 ]
 
 

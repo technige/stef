@@ -169,9 +169,11 @@ Bracketed lists may contain trailing commas.
 
 ### Dictionary
 
-Dictionaries are unordered collections containing sets of key-value pairs. One
-canonical standard presentational form (bracketed) is permitted, along with two
-conditional forms (block and inline).
+Dictionaries are unordered collections containing sets of key-value pairs.
+Dictionary keys may be either text strings or integers.
+
+One canonical standard presentational form (bracketed) is permitted for
+dictionaries, along with two conditional forms (block and inline).
 
 Block dictionaries are permitted only at depth 0 (root level) and must contain
 at least one value.
