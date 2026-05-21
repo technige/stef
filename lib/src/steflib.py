@@ -179,20 +179,24 @@ class Bytes(_Commented, bytes):
 
 class List(_Commented, list):
 
-    def __new__(cls, *args, **kwargs):
-        comment = kwargs.pop("comment", None)
-        obj = super().__new__(cls, *args, **kwargs)
+    def __new__(cls, iterable=None, /, comment=None):
+        obj = super().__new__(cls, iterable or [])
         obj.__comment__ = comment
         return obj
+
+    def __init__(self, iterable=None, /, comment=None):
+        super().__init__(iterable or [])
 
 
 class Dictionary(_Commented, dict):
 
-    def __new__(cls, *args, **kwargs):
-        comment = kwargs.pop("comment", None)
-        obj = super().__new__(cls, *args, **kwargs)
+    def __new__(cls, mapping=None, /, comment=None):
+        obj = super().__new__(cls, mapping or {})
         obj.__comment__ = comment
         return obj
+
+    def __init__(self, mapping=None, /, comment=None):
+        super().__init__(mapping or {})
 
 
 class StefWriter:
@@ -262,6 +266,7 @@ class StefWriter:
         self._write_comment(getattr(key, "__comment__", None), prefix=" ")
 
     def _write_value(self, value):
+        result = {}
         if value is None:
             self._write_null()
         elif isinstance(value, (bool, Boolean)):
@@ -287,12 +292,16 @@ class StefWriter:
         elif isinstance(value, (bytes, bytearray)):
             self._write_bytes(value)
         elif isinstance(value, list_like):
-            self._write_list(value)
+            result.update(self._write_list(value))
         elif isinstance(value, dict):
-            self._write_dictionary(value)
+            result.update(self._write_dictionary(value))
         else:
             raise ValueError(value)
-        self._write_comment(getattr(value, "__comment__", None), prefix=" ")
+        if result.get("form", None) == "block":
+            prefix = "\n"
+        else:
+            prefix = " "
+        self._write_comment(getattr(value, "__comment__", None), prefix=prefix)
 
     def _write_null(self):
         self._buffer.append("null")
@@ -356,24 +365,29 @@ class StefWriter:
         value = list(value)
         depth = len(self._stack)
         self._stack.append("[")
-        if depth == 0 and len(value) >= 1:
-            # block list
-            self._write_block_list(value)
-        elif depth == 1 and len(value) >= 2:
-            # inline list
-            for i, value in enumerate(value):
-                if i > 0:
-                    self._buffer.append(", ")
-                self._write_value(value)
-        else:
-            # bracketed list
-            self._buffer.append("[")
-            for i, value in enumerate(value):
-                if i > 0:
-                    self._buffer.append(", ")
-                self._write_value(value)
-            self._buffer.append("]")
-        self._stack.pop()
+        try:
+            if depth == 0 and len(value) >= 1:
+                # block list
+                self._write_block_list(value)
+                return {"form": "block"}
+            elif depth == 1 and len(value) >= 2:
+                # inline list
+                for i, value in enumerate(value):
+                    if i > 0:
+                        self._buffer.append(", ")
+                    self._write_value(value)
+                return {"form": "inline"}
+            else:
+                # bracketed list
+                self._buffer.append("[")
+                for i, value in enumerate(value):
+                    if i > 0:
+                        self._buffer.append(", ")
+                    self._write_value(value)
+                self._buffer.append("]")
+                return {"form": "bracketed"}
+        finally:
+            self._stack.pop()
 
     def _write_block_list(self, value):
         for i, value in enumerate(value):
@@ -389,38 +403,44 @@ class StefWriter:
         values = list(data.values())
         depth = len(self._stack)
         self._stack.append("{")
-        if depth == 0 and size == 1 and isinstance(values[0], list_like) and len(values[0]) >= 1:
-            # keyed block list
-            self._write_key(keys[0])
-            self._buffer.append(":\n")
-            self._write_block_list(values[0])
-        elif depth == 0 and size >= 1:
-            # block dictionary
-            for i, (key, data) in enumerate(data.items()):
-                if i > 0:
-                    self._buffer.append("\n")
-                self._write_key(key)
-                self._buffer.append(": ")
-                self._write_value(data)
-        elif depth == 1 and size >= 1:
-            # inline dictionary
-            for i, (key, data) in enumerate(data.items()):
-                if i > 0:
-                    self._buffer.append(", ")
-                self._write_key(key)
-                self._buffer.append(": ")
-                self._write_value(data)
-        else:
-            # bracketed dictionary
-            self._buffer.append("{")
-            for i, (key, data) in enumerate(data.items()):
-                if i > 0:
-                    self._buffer.append(", ")
-                self._write_key(key)
-                self._buffer.append(": ")
-                self._write_value(data)
-            self._buffer.append("}")
-        self._stack.pop()
+        try:
+            if depth == 0 and size == 1 and isinstance(values[0], list_like) and len(values[0]) >= 1:
+                # keyed block list
+                self._write_key(keys[0])
+                self._buffer.append(":\n")
+                self._write_block_list(values[0])
+                return {"form": "block"}
+            elif depth == 0 and size >= 1:
+                # block dictionary
+                for i, (key, data) in enumerate(data.items()):
+                    if i > 0:
+                        self._buffer.append("\n")
+                    self._write_key(key)
+                    self._buffer.append(": ")
+                    self._write_value(data)
+                return {"form": "block"}
+            elif depth == 1 and size >= 1:
+                # inline dictionary
+                for i, (key, data) in enumerate(data.items()):
+                    if i > 0:
+                        self._buffer.append(", ")
+                    self._write_key(key)
+                    self._buffer.append(": ")
+                    self._write_value(data)
+                return {"form": "inline"}
+            else:
+                # bracketed dictionary
+                self._buffer.append("{")
+                for i, (key, data) in enumerate(data.items()):
+                    if i > 0:
+                        self._buffer.append(", ")
+                    self._write_key(key)
+                    self._buffer.append(": ")
+                    self._write_value(data)
+                self._buffer.append("}")
+                return {"form": "bracketed"}
+        finally:
+            self._stack.pop()
 
 
 def is_reserved(word):

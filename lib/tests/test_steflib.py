@@ -1,6 +1,6 @@
 from datetime import date, datetime, timedelta
 
-from steflib import stef, Boolean, Integer, Float, Text
+from steflib import stef, Boolean, Integer, Float, Text, List, Dictionary
 
 
 integer_tests = [
@@ -75,6 +75,10 @@ list_tests = [
     ([1], "- 1"),
     ([1, 2], "- 1\n- 2"),
     ([{"one": 1}, {"two": 2}], "- one: 1\n- two: 2"),
+    (List(), "[]"),
+    (List(comment="empty"), "[] (empty)"),
+    (List([1], comment="singleton"), "- 1\n(singleton)"),
+    (List([1, 2], comment="block"), "- 1\n- 2\n(block)"),
 ]
 
 
@@ -97,6 +101,11 @@ dictionary_tests = [
     ({"empty": []}, "empty: []"),
     ({"odds": [1, 3, 5], "evens": [2, 4, 6]}, "odds: 1, 3, 5\nevens: 2, 4, 6"),
     ({"odds": [{"one": 1}, {"three": 3}], "evens": [{"two": 2}, {"four": 4}]}, "odds: {one: 1}, {three: 3}\nevens: {two: 2}, {four: 4}"),
+    (Dictionary(), "{}"),
+    (Dictionary(comment="empty"), "{} (empty)"),
+    (Dictionary({"one": 1}, comment="singleton"), "one: 1\n(singleton)"),
+    (Dictionary({"one": 1, "two": 2}, comment="block"), "one: 1\ntwo: 2\n(block)"),
+    (Dictionary({"colours": ["red", "green", "blue"]}, comment="primary"), "colours:\n- red\n- green\n- blue\n(primary)"),
 ]
 
 
