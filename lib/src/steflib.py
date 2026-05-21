@@ -156,6 +156,15 @@ class Duration(_Commented, timedelta):
         return obj
 
 
+class Text(_Commented, str):
+
+    def __new__(cls, *args, **kwargs):
+        comment = kwargs.pop("comment", None)
+        obj = super().__new__(cls, *args, **kwargs)
+        obj.__comment__ = comment
+        return obj
+
+
 class Bytes(_Commented, bytes):
 
     def __new__(cls, *args, **kwargs):

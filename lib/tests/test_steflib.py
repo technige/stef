@@ -1,6 +1,6 @@
 from datetime import date, datetime, timedelta
 
-from steflib import stef, Boolean, Integer, Float
+from steflib import stef, Boolean, Integer, Float, Text
 
 
 integer_tests = [
@@ -45,6 +45,9 @@ text_tests = [
     ("", '""'),
     ("hello", 'hello'),
     ("hello, world", '"hello, world"'),
+    (Text(""), '""'),
+    (Text("hello"), 'hello'),
+    (Text("hello, world"), '"hello, world"'),
 ]
 
 timestamp_tests = [
