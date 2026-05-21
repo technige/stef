@@ -110,8 +110,7 @@ or `1e0`. However, implementations may choose to output any valid form.
 Parsers should gracefully accept any valid form.
 
 ```
-numeric         := number | not-a-number
-number          := sign? (integer | float | infinity)
+numeric         := integer | float
 
 sign            := "+" | "-"
 digit           := "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
@@ -121,13 +120,14 @@ hex-lower       := "a" | "b" | "c" | "d" | "e" | "f"
 hex-digit       := digit | hex-upper | hex-lower
 hex-digit-seq   := hex-digit (hex-digit | "_")*
 
-integer         := dec-integer | hex-integer
+integer         := sign? (dec-integer | hex-integer)
 dec-integer     := digit-seq
 hex-integer     := "0x" hex-digit-seq
-float           := digit-seq (fraction | exponent | fraction exponent)
+
+float           := number | not-a-number | (sign? infinity)
+number          := sign? digit-seq (fraction | exponent | fraction exponent)
 fraction        := "." digit-seq
 exponent        := "e"/i sign? digit-seq
-
 not-a-number    := "NaN"/i
 infinity        := "infinity"/i
 ```
@@ -241,7 +241,7 @@ comma           := ","
 list-seq        := value ~~ (comma ~~ value ~~)* comma?
 list            := "[" list-seq? ~~ "]"
 
-key             := IDENTIFIER | text | (sign? integer)
+key             := IDENTIFIER | text | integer
 key-value       := key ~~ ":" ~~ value
 dict-seq        := key-value ~~ (comma ~~ key-value ~~)* comma?
 dict            := "{" dict-seq? ~~ "}"
